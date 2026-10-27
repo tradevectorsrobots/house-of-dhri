@@ -1,0 +1,82 @@
+---
+import IntroCurtain from "../IntroCurtain.astro";
+import MaskLines from "../MaskLines.astro";
+import Icon from "../Icon.astro";
+import { waLink } from "../../data/site.js";
+---
+<section data-testid="home-hero" data-hero class="relative min-h-[100svh] mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-32 sm:pt-36 pb-16">
+  <IntroCurtain />
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-end">
+    <div class="lg:col-span-7">
+      <p class="anim-fade overline text-[#CDB894] mb-8" style="--delay: var(--hd); --dur: 0.8s">
+        Fine jewellery · Lab-grown diamonds · India
+      </p>
+      <h1 data-testid="hero-headline" class="font-display font-light text-[3.6rem] sm:text-[5.5rem] lg:text-[7rem] xl:text-[8.25rem] leading-[0.88] tracking-[-0.02em]">
+        <MaskLines lines={["Distinctive", "by design."]} delay="var(--hd)" />
+        <MaskLines lines={[{ em: "Brilliant", class: "text-[#B39A70] font-light" }, "by nature."]} delay="calc(var(--hd) + 0.24s)" />
+      </h1>
+    </div>
+    <div
+      class="anim-rise lg:col-span-5 lg:pl-6 max-w-md mx-auto w-full lg:max-w-[460px] lg:mr-0"
+      style="--from-y: 60px; --delay: calc(var(--hd) - 0.1s); --dur: 1.4s"
+    >
+      <div data-tilt style="perspective: 1200px" class="relative w-full">
+        <div
+          data-testid="hero-image-frame"
+          data-tilt-frame
+          style="transform-style: preserve-3d"
+          class="relative aspect-[4/5] w-full overflow-hidden rounded-t-[999px] bg-[#F6F1E8] shadow-[0_60px_120px_-50px_rgba(38,35,31,0.65)]"
+        >
+          <div data-parallax="hero" class="absolute inset-0 h-full w-full">
+            <img
+              src="/images/hero.jpg"
+              alt="Solitaire ring resting on a sculpted plaster form"
+              width="848"
+              height="1264"
+              fetchpriority="high"
+              decoding="async"
+              class="anim-zoom absolute inset-0 h-full w-full object-cover"
+              style="--zoom-from: 1.35; --zoom-to: 1.12; --dur: 2.4s; --delay: 0.2s"
+            />
+          </div>
+          <div
+            data-tilt-light
+            class="absolute inset-0 mix-blend-soft-light pointer-events-none"
+            style="background: radial-gradient(420px circle at 50% 50%, rgba(246,241,232,0.28), transparent 60%)"
+          ></div>
+        </div>
+        <div class="anim-slide absolute -left-4 sm:-left-10 bottom-10 bg-[#26231F] px-5 py-4 border border-[#F6F1E8]/10" style="--delay: 2.1s; --dur: 0.9s">
+          <p class="overline text-[#CDB894]">The stone</p>
+          <p class="font-display text-xl mt-1">Type IIa · CVD</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="anim-rise mt-14 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end" style="--from-y: 20px; --delay: calc(var(--hd) + 0.7s); --dur: 1s">
+    <p class="lg:col-span-5 text-base sm:text-lg leading-relaxed text-[#F6F1E8]/75 max-w-md">
+      A contemporary jewellery house for sculptural forms, clean lines and Type IIa CVD lab-grown diamonds — chosen for what they mean to you.
+    </p>
+    <div class="lg:col-span-7 flex flex-wrap items-center gap-4 lg:justify-end">
+      <a
+        href="/collections"
+        data-testid="hero-explore-button"
+        class="group inline-flex items-center gap-3 rounded-full bg-[#F6F1E8] text-[#26231F] px-7 py-4 text-sm tracking-[0.1em] uppercase transition-colors duration-300 hover:bg-[#B39A70]"
+      >
+        Explore collections
+        <Icon name="arrow-up-right" class="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" strokeWidth={1.5} />
+      </a>
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noreferrer"
+        data-testid="hero-enquire-button"
+        class="inline-flex items-center gap-3 rounded-full border border-[#F6F1E8]/40 px-7 py-4 text-sm tracking-[0.1em] uppercase transition-colors duration-300 hover:border-[#F6F1E8] hover:bg-[#F6F1E8] hover:text-[#26231F]"
+      >
+        Private consultation
+      </a>
+      <span class="hidden lg:flex items-center gap-2 ml-6 overline text-[#F6F1E8]/60">
+        Scroll <Icon name="arrow-down-right" class="h-3.5 w-3.5 animate-bounce" strokeWidth={1.5} />
+      </span>
+    </div>
+  </div>
+</section>

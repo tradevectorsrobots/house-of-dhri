@@ -1,0 +1,15 @@
+---
+// Lines slide up from behind a mask. `lines` items are strings or { em, class } for an italic accent.
+// `delay` may be a number (seconds) or a CSS time expression, e.g. "calc(var(--hd) + 0.24s)".
+const { lines = [], class: className = "", delay = 0, inView = false } = Astro.props;
+const delayValue = typeof delay === "number" ? `${delay}s` : delay;
+---
+<span class={`block ${className}`} data-mask={inView ? "view" : "load"} style={`--mask-delay: ${delayValue}`}>
+  {lines.map((l, i) => (
+    <span class="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+      <span class="block mask-line" style={`--i: ${i}`}>
+        {typeof l === "string" ? l : <em class={l.class}>{l.em}</em>}
+      </span>
+    </span>
+  ))}
+</span>

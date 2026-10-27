@@ -1,0 +1,135 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MaskLines from "../../components/MaskLines.astro";
+import Overline from "../../components/Overline.astro";
+import Reveal from "../../components/Reveal.astro";
+import PieceGrid from "../../components/PieceGrid.astro";
+import Icon from "../../components/Icon.astro";
+import { COLLECTIONS, waLink } from "../../data/site.js";
+import { productsIn } from "../../data/products.js";
+import { breadcrumbList, absUrl } from "../../data/seo.js";
+
+export function getStaticPaths() {
+  return COLLECTIONS.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+
+const { c } = Astro.props;
+const items = productsIn(c.slug);
+const next = COLLECTIONS[(COLLECTIONS.indexOf(c) + 1) % COLLECTIONS.length];
+const path = `/collections/${c.slug}`;
+
+const schema = [
+  breadcrumbList([["Home", "/"], ["Collections", "/collections"], [c.name, path]]),
+  {
+    "@type": "CollectionPage",
+    "@id": `${absUrl(path)}#collection`,
+    name: `${c.name} — ${c.line}`,
+    description: c.intro,
+    url: absUrl(path),
+    image: absUrl(c.image),
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: p.name,
+        url: absUrl(`/pieces/${p.slug}`),
+      })),
+    },
+  },
+];
+---
+<BaseLayout
+  title={`${c.name} — ${c.line}`}
+  description={`${c.name}: ${c.intro}`}
+  path={path}
+  image={c.image}
+  imageAlt={`${c.name} collection mood`}
+  schema={schema}
+>
+  <link slot="head" rel="preload" as="image" href={c.image} fetchpriority="high" />
+  <div data-testid={`collection-page-${c.slug}`}>
+    <section data-testid="collection-banner" data-parallax-scope="banner" class="relative h-[92svh] min-h-[560px] overflow-hidden bg-[#26231F] text-[#F6F1E8]">
+      <div data-parallax="banner" class="absolute inset-0 h-full w-full">
+        <img
+          src={c.image}
+          alt={`${c.name} collection mood`}
+          width="848"
+          height="1264"
+          fetchpriority="high"
+          decoding="async"
+          class="anim-zoom absolute inset-0 h-full w-full object-cover"
+          style="--zoom-from: 1.2; --zoom-to: 1.05; --dur: 2s"
+        />
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#26231F] via-[#26231F]/30 to-[#26231F]/30"></div>
+      <div class="relative h-full mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 flex flex-col justify-end pb-16 sm:pb-24">
+        <p class="overline text-[#E3D3B4]">Collection {c.numeral} · {items.length ? `${items.length} pieces` : "Coming soon"}</p>
+        <h1 data-testid="collection-title" class="font-display font-light uppercase tracking-[0.14em] text-6xl sm:text-8xl lg:text-[9rem] leading-[0.9] mt-6">
+          <MaskLines lines={[c.name]} delay={0.2} />
+        </h1>
+        <p class="font-display italic text-2xl sm:text-3xl mt-6 text-[#F6F1E8]/90">{c.line}</p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-24 sm:py-32 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <Reveal class="lg:col-span-7">
+        <p class="font-display font-light text-3xl sm:text-5xl leading-[1.15]">{c.intro}</p>
+      </Reveal>
+      <Reveal delay={0.15} class="lg:col-span-4 lg:col-start-9">
+        <Overline>Design directions</Overline>
+        <ul class="mt-6 border-t border-[#F6F1E8]/15">
+          {c.directions.map((d, i) => (
+            <li class="flex items-baseline gap-5 py-4 border-b border-[#F6F1E8]/15">
+              <span class="font-mono-x text-xs text-[#CDB894]">0{i + 1}</span>
+              <span class="font-display text-2xl">{d}</span>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pb-24">
+      {items.length ? (
+        <div data-testid="collection-pieces">
+          <Reveal class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <h2 class="font-display font-light text-4xl sm:text-6xl">The pieces</h2>
+            <a href={waLink(`Hello House of Dhri, I'd like to know more about the ${c.name} collection.`)} target="_blank" rel="noreferrer" data-testid="collection-enquire-whatsapp" class="link-line text-sm tracking-[0.12em] uppercase self-start sm:self-auto">
+              Enquire about {c.name}
+            </a>
+          </Reveal>
+          <PieceGrid items={items} />
+          <p class="mt-14 text-sm text-[#F6F1E8]/70 max-w-xl">Images are design renders. Final metal, stone and grading details are confirmed with you personally on enquiry.</p>
+        </div>
+      ) : (
+        <Reveal class="bg-[#2E2A25] border border-[#F6F1E8]/10 p-8 sm:p-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7" data-testid="collection-coming-soon">
+            <Overline>First pieces in development</Overline>
+            <h2 class="font-display font-light text-4xl sm:text-5xl mt-5 leading-[1.05]">Be the first to see {c.name}.</h2>
+            <p class="mt-6 text-[#F6F1E8]/75 leading-relaxed max-w-lg">
+              We only show pieces that are real and approved. Register your interest and we'll share the first designs with you privately.
+            </p>
+          </div>
+          <div class="lg:col-span-5 flex flex-col gap-3">
+            <a href={waLink(`Hello House of Dhri, I'd like to register my interest in the ${c.name} collection.`)} target="_blank" rel="noreferrer" data-testid="collection-register-whatsapp" class="inline-flex items-center justify-center gap-3 rounded-full bg-[#F6F1E8] text-[#26231F] px-7 py-4 text-sm tracking-[0.1em] uppercase transition-colors duration-300 hover:bg-[#B39A70]">
+              <Icon name="message-circle" class="h-4 w-4" strokeWidth={1.5} /> Register interest on WhatsApp
+            </a>
+            <a href="/contact" data-testid="collection-enquiry-link" class="inline-flex items-center justify-center rounded-full border border-[#F6F1E8]/40 px-7 py-4 text-sm tracking-[0.1em] uppercase transition-colors duration-300 hover:bg-[#F6F1E8] hover:text-[#26231F]">
+              Send a private enquiry
+            </a>
+          </div>
+        </Reveal>
+      )}
+    </section>
+
+    <a href={`/collections/${next.slug}`} data-testid="next-collection-link" class="group block border-t border-[#F6F1E8]/15">
+      <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-20 flex items-end justify-between gap-6">
+        <div>
+          <Overline>Next collection</Overline>
+          <p class="font-display font-light uppercase tracking-[0.12em] text-5xl sm:text-8xl mt-4 transition-colors duration-500 group-hover:text-[#B39A70]">{next.name}</p>
+        </div>
+        <Icon name="arrow-up-right" class="h-10 w-10 sm:h-16 sm:w-16 transition-transform duration-700 group-hover:rotate-45" strokeWidth={0.8} />
+      </div>
+    </a>
+  </div>
+</BaseLayout>

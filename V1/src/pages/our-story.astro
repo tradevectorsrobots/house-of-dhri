@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ClipImage from "../components/ClipImage.astro";
+import Overline from "../components/Overline.astro";
+import Reveal from "../components/Reveal.astro";
+import MaskLines from "../components/MaskLines.astro";
+import { breadcrumbList } from "../data/seo.js";
+
+const PRINCIPLES = [
+  ["Design first", "Sculptural forms, architectural silhouettes, clean lines and distinctive proportions."],
+  ["Modern diamond luxury", "Type IIa CVD lab-grown diamonds, described with accurate and transparent specifications."],
+  ["Personal expression", "Jewellery for everyday wear, self-purchase, meaningful milestones and individual style."],
+  ["Honest communication", "We explain our material choices plainly, and make claims only when we can substantiate them."],
+];
+
+const schema = [breadcrumbList([["Home", "/"], ["Our Story", "/our-story"]])];
+---
+<BaseLayout
+  title="Our Story"
+  description="Dhri draws from the Sanskrit root dhṛ — to hold, to bear, to sustain. A contemporary jewellery house built on design, meaning and honest communication."
+  schema={schema}
+>
+  <div data-testid="story-page">
+    <PageHero
+      testid="story-hero"
+      overline="Our story"
+      lines={["Jewellery", { em: "that holds.", class: "text-[#B39A70]" }]}
+      intro="House of Dhri is a contemporary jewellery house built on a simple idea: what you wear should be chosen for what it means, not only for what it is worth."
+    />
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pb-28 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <ClipImage src="/images/atelier.jpg" alt="A jeweller setting a ring at the bench" class="lg:col-span-7 aspect-[3/2]" testid="story-image" />
+      <Reveal class="lg:col-span-4 lg:col-start-9">
+        <Overline>The name</Overline>
+        <p class="font-display italic text-7xl text-[#B39A70] mt-4">dhṛ</p>
+        <p class="mt-6 text-lg leading-relaxed text-[#F6F1E8]/80">
+          Dhri draws inspiration from the Sanskrit root <em>dhṛ</em> — associated with holding, bearing and sustaining. Jewellery holds memories, marks milestones and, over time, becomes part of who we are.
+        </p>
+      </Reveal>
+    </section>
+    <section class="on-stone bg-[#B9B4AB] text-[#26231F]">
+      <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 sm:py-40">
+        <h2 class="font-display font-light text-4xl sm:text-6xl lg:text-7xl leading-[1.02] max-w-5xl">
+          <MaskLines inView lines={["Not another diamond retailer.", { em: "A house with a point of view.", class: "text-[#5B4A2D]" }]} />
+        </h2>
+        <Reveal delay={0.2}>
+          <p class="mt-10 max-w-2xl text-lg leading-relaxed text-[#26231F]/80">
+            We are not here to compete on price. We are here to build a recognisable design identity — pieces you choose for their aesthetic, their craft and the experience of owning them.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 sm:py-36">
+      <Overline class="mb-14">What we stand for</Overline>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16">
+        {PRINCIPLES.map(([t, d], i) => (
+          <Reveal delay={(i % 2) * 0.1} class="py-10 border-t border-[#F6F1E8]/15 grid grid-cols-[48px_1fr] gap-4">
+            <span class="font-mono-x text-xs text-[#CDB894] pt-3">0{i + 1}</span>
+            <div data-testid={`story-principle-${i + 1}`}>
+              <h3 class="font-display text-3xl sm:text-4xl">{t}</h3>
+              <p class="mt-4 text-[#F6F1E8]/75 leading-relaxed max-w-md">{d}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

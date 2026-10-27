@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ClipImage from "../components/ClipImage.astro";
+import Overline from "../components/Overline.astro";
+import Reveal from "../components/Reveal.astro";
+import Icon from "../components/Icon.astro";
+import { breadcrumbList, faqSchema } from "../data/seo.js";
+
+const CHAPTERS = [
+  {
+    k: "01",
+    t: "Lab-grown diamonds",
+    d: "A lab-grown diamond is a real diamond: crystalline carbon with the same chemical, physical and optical properties as a mined diamond. The difference is its origin — it is grown in a controlled environment rather than extracted from the earth.",
+  },
+  {
+    k: "02",
+    t: "Type IIa",
+    d: "Diamonds are classified by the trace elements in their crystal. Type IIa diamonds contain no measurable nitrogen, making them among the most chemically pure. In nature they are rare — estimated at only around one to two percent of mined diamonds.",
+  },
+  {
+    k: "03",
+    t: "CVD — chemical vapour deposition",
+    d: "In CVD growth, a thin diamond seed plate is placed in a chamber filled with carbon-rich gas. Energy breaks the gas apart and carbon atoms settle onto the seed, building the crystal layer by layer. Some CVD diamonds receive post-growth treatment to refine colour; where this applies to a stone, we will tell you.",
+  },
+];
+
+const COMMITMENTS = [
+  "Every specification we publish is verified for that piece or stone.",
+  "Grading reports are shared where available, and identified by issuing laboratory.",
+  "Metal type and purity are stated per piece.",
+  "We do not make sustainability or environmental claims we cannot substantiate.",
+];
+
+const FAQ = [
+  ["Are lab-grown diamonds real diamonds?", "Yes. They are diamonds — the same material as mined diamonds — differing only in origin."],
+  ["How do I find out the price?", "All pieces are price on enquiry. Message us on WhatsApp or send a private enquiry and we will share price, specifications and availability."],
+  ["Can a piece be customised?", "Where a design allows, we are happy to discuss adjustments. Customisation is always subject to feasibility, which we confirm during consultation."],
+  ["Will my diamond come with a grading report?", "Where a stone has a grading report, we will share it and tell you which laboratory issued it before you commit."],
+];
+
+const schema = [breadcrumbList([["Home", "/"], ["Diamonds & Materials", "/diamonds-and-materials"]]), faqSchema(FAQ)];
+---
+<BaseLayout
+  title="Diamonds & Materials"
+  description="What Type IIa CVD lab-grown diamonds are, how they are grown, and what House of Dhri will always disclose about every stone and piece."
+  schema={schema}
+>
+  <div data-testid="diamonds-page">
+    <PageHero
+      testid="diamonds-hero"
+      overline="Diamonds & materials"
+      lines={["Brilliant by nature.", { em: "Honest by design.", class: "text-[#B39A70]" }]}
+      intro="What we use, how it is made, and what we promise to tell you — in plain language."
+    />
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-5 lg:sticky lg:top-28 self-start">
+        <ClipImage src="/images/diamond.jpg" alt="Loose round brilliant diamond" class="aspect-square" testid="diamonds-image" />
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7">
+        {CHAPTERS.map((c) => (
+          <Reveal class="py-12 border-t border-[#F6F1E8]/15 first:border-t-0 first:pt-0">
+            <p class="font-mono-x text-xs text-[#CDB894]">{c.k}</p>
+            <h2 data-testid={`diamonds-chapter-${c.k}`} class="font-display font-light text-4xl sm:text-5xl mt-4">{c.t}</h2>
+            <p class="mt-6 text-lg leading-relaxed text-[#F6F1E8]/80">{c.d}</p>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+    <section class="on-stone bg-[#B9B4AB] text-[#26231F]">
+      <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <Reveal class="lg:col-span-5">
+          <Overline light>Our disclosure standard</Overline>
+          <h2 class="font-display font-light text-4xl sm:text-6xl mt-6 leading-[1.02]">What we will <em class="text-[#5B4A2D]">always</em> tell you.</h2>
+        </Reveal>
+        <ol class="lg:col-span-6 lg:col-start-7">
+          {COMMITMENTS.map((t, i) => (
+            <Reveal as="li" delay={i * 0.08} y={14} class="flex gap-6 py-6 border-b border-[#26231F]/15">
+              <span class="font-mono-x text-xs text-[#5B4A2D] pt-2">0{i + 1}</span>
+              <p class="font-display text-2xl leading-snug">{t}</p>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+    </section>
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <Reveal class="lg:col-span-4">
+        <Overline>Questions</Overline>
+        <h2 class="font-display font-light text-4xl sm:text-5xl mt-5">Asked, answered.</h2>
+      </Reveal>
+      <div class="lg:col-span-7 lg:col-start-6" data-testid="diamonds-faq" data-accordion>
+        {FAQ.map(([q, a], i) => (
+          <div data-state="closed" class="border-b border-[#F6F1E8]/15" data-accordion-item>
+            <h3 class="flex">
+              <button
+                type="button"
+                id={`faq-trigger-${i}`}
+                aria-controls={`faq-panel-${i}`}
+                aria-expanded="false"
+                data-state="closed"
+                data-testid={`faq-trigger-${i}`}
+                data-accordion-trigger
+                class="flex flex-1 items-center justify-between transition-all [&[data-state=open]>svg]:rotate-180 font-display text-xl sm:text-2xl text-left font-normal py-6 hover:no-underline"
+              >
+                {q}
+                <Icon name="chevron-down" class="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+              </button>
+            </h3>
+            <div
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
+              data-state="closed"
+              data-accordion-content
+              hidden
+              class="faq-content overflow-hidden text-sm"
+            >
+              <div class="pt-0 text-base leading-relaxed text-[#F6F1E8]/80 pb-6">{a}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

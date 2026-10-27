@@ -1,0 +1,31 @@
+---
+import Overline from "../Overline.astro";
+import Reveal from "../Reveal.astro";
+
+const STEPS = [
+  ["Discover", "Explore the collections and the thinking behind each direction."],
+  ["Converse", "Message us on WhatsApp for price, specifications and availability. Every piece is price on enquiry."],
+  ["Consult", "A private one-to-one conversation to compare stones, settings and proportions."],
+  ["Personalise", "Where a design allows, we discuss bespoke adjustments — always subject to feasibility."],
+];
+---
+<section data-testid="home-ritual" class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 sm:py-40">
+  <Reveal class="max-w-2xl mb-16 sm:mb-20">
+    <Overline>The experience</Overline>
+    <h2 class="font-display font-light text-4xl sm:text-6xl mt-5 leading-[1.02]">
+      Personal, from the <em class="text-[#B39A70]">first message.</em>
+    </h2>
+  </Reveal>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14">
+    {STEPS.map(([t, d], i) => (
+      <div data-testid={`ritual-step-${i + 1}`}>
+        <div data-draw data-amount="0.1" style={`--draw-delay: ${i * 0.15}s`} class="h-px bg-[#F6F1E8] origin-left"></div>
+        <Reveal delay={0.2 + i * 0.15} y={16}>
+          <p class="font-mono-x text-xs text-[#CDB894] mt-6">0{i + 1}</p>
+          <h3 class="font-display text-3xl mt-4">{t}</h3>
+          <p class="mt-4 text-[#F6F1E8]/75 leading-relaxed">{d}</p>
+        </Reveal>
+      </div>
+    ))}
+  </div>
+</section>

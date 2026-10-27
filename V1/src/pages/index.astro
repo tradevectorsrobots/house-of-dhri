@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import Manifesto from "../components/home/Manifesto.astro";
+import CollectionsBento from "../components/home/CollectionsBento.astro";
+import PiecesRow from "../components/home/PiecesRow.astro";
+import DiamondFeature from "../components/home/DiamondFeature.astro";
+import Ritual from "../components/home/Ritual.astro";
+import ClosingCta from "../components/home/ClosingCta.astro";
+---
+<BaseLayout path="/">
+  <link slot="head" rel="preload" as="image" href="/images/hero.jpg" fetchpriority="high" />
+  <div data-testid="home-page">
+    <Hero />
+    <Marquee />
+    <Manifesto />
+    <CollectionsBento />
+    <PiecesRow />
+    <DiamondFeature />
+    <Ritual />
+    <ClosingCta />
+  </div>
+</BaseLayout>

@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Overline from "../components/Overline.astro";
+import Reveal from "../components/Reveal.astro";
+import Icon from "../components/Icon.astro";
+import { WHATSAPP_DISPLAY, WHATSAPP_NUMBER, waLink } from "../data/site.js";
+import { breadcrumbList, absUrl } from "../data/seo.js";
+
+const INTERESTS = ["Prithvi — bridal & milestones", "Nitya — everyday", "Akarsha — architectural", "Loose diamonds", "Custom design", "Something else"];
+const PREFS = ["WhatsApp", "Email", "Phone"];
+const field = "w-full bg-transparent border-0 border-b border-[#F6F1E8]/30 py-3 text-lg font-light focus:outline-none focus:border-[#F6F1E8] transition-colors placeholder:text-[#F6F1E8]/40";
+
+const schema = [
+  breadcrumbList([["Home", "/"], ["Private Enquiries", "/contact"]]),
+  {
+    "@type": "ContactPage",
+    "@id": `${absUrl("/contact")}#contact`,
+    url: absUrl("/contact"),
+    name: "Contact & Private Enquiries — House of Dhri",
+  },
+];
+---
+<BaseLayout
+  title="Contact & Private Enquiries"
+  description="Ask House of Dhri about prices, specifications, availability, customisation or a private consultation — on WhatsApp or by enquiry form."
+  schema={schema}
+>
+  <div data-testid="contact-page">
+    <PageHero
+      testid="contact-hero"
+      overline="Contact & private enquiries"
+      lines={["Speak with", { em: "the house.", class: "text-[#B39A70]" }]}
+      intro="Prices, specifications, availability, customisation or a private consultation — we answer every enquiry personally."
+    />
+    <section class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pb-32 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <Reveal class="lg:col-span-4 on-stone bg-[#B9B4AB] text-[#26231F] p-8 sm:p-10">
+        <Overline light>The quickest way</Overline>
+        <p class="font-display text-4xl mt-5 leading-[1.05]">Message us on WhatsApp.</p>
+        <p class="mt-5 text-[#26231F]/80 leading-relaxed">A direct line to the house for questions, prices and consultations.</p>
+        <a href={waLink()} target="_blank" rel="noreferrer" data-testid="contact-whatsapp-button" class="mt-10 flex items-center justify-center gap-3 rounded-full bg-[#26231F] text-[#F6F1E8] py-4 text-sm tracking-[0.12em] uppercase transition-colors duration-300 hover:bg-[#B39A70] hover:text-[#26231F]">
+          <Icon name="message-circle" class="h-4 w-4" strokeWidth={1.5} /> Open WhatsApp
+        </a>
+        <p data-testid="contact-whatsapp-number" class="mt-6 font-mono-x text-sm text-[#5B4A2D] text-center">{WHATSAPP_DISPLAY}</p>
+      </Reveal>
+      <Reveal delay={0.15} class="lg:col-span-7 lg:col-start-6">
+        <Overline class="mb-10">Or write to us</Overline>
+        <div data-enquiry data-wa-number={WHATSAPP_NUMBER}>
+          <form data-testid="contact-form" data-enquiry-form class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
+            <label class="block">
+              <span class="overline text-[0.65rem] text-[#CDB894]">Name</span>
+              <input required name="name" autocomplete="name" data-testid="contact-name-input" class={field} placeholder="Your name" />
+            </label>
+            <label class="block">
+              <span class="overline text-[0.65rem] text-[#CDB894]">Email</span>
+              <input required type="email" name="email" autocomplete="email" inputmode="email" data-testid="contact-email-input" class={field} placeholder="you@email.com" />
+            </label>
+            <label class="block">
+              <span class="overline text-[0.65rem] text-[#CDB894]">Phone (optional)</span>
+              <input type="tel" name="phone" autocomplete="tel" data-testid="contact-phone-input" class={field} placeholder="+91" />
+            </label>
+            <label class="block">
+              <span class="overline text-[0.65rem] text-[#CDB894]">Interested in</span>
+              <select name="interest" data-testid="contact-interest-select" class={`${field} appearance-none cursor-pointer`}>
+                {INTERESTS.map((i) => <option>{i}</option>)}
+              </select>
+            </label>
+            <div class="sm:col-span-2">
+              <span class="overline text-[0.65rem] text-[#CDB894]" id="pref-label">Preferred contact</span>
+              <input type="hidden" name="preferred_contact" value="WhatsApp" />
+              <div class="flex gap-3 mt-4" role="radiogroup" aria-labelledby="pref-label">
+                {PREFS.map((m, i) => (
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={i === 0 ? "true" : "false"}
+                    data-pref={m}
+                    data-testid={`contact-pref-${m.toLowerCase()}`}
+                    class={`tap-target rounded-full px-5 py-2 text-sm border transition-colors duration-300 ${i === 0 ? "bg-[#F6F1E8] text-[#26231F] border-[#F6F1E8]" : "border-[#F6F1E8]/30 hover:border-[#F6F1E8]"}`}
+                  >
+                    {m}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <label class="block sm:col-span-2">
+              <span class="overline text-[0.65rem] text-[#CDB894]">Your message</span>
+              <textarea required rows="4" name="message" data-testid="contact-message-input" class={`${field} resize-none`} placeholder="Tell us what you have in mind"></textarea>
+            </label>
+            <div class="sm:col-span-2">
+              <button type="submit" data-testid="contact-submit-button" class="group inline-flex items-center gap-3 rounded-full bg-[#F6F1E8] text-[#26231F] px-8 py-4 text-sm tracking-[0.12em] uppercase transition-colors duration-300 hover:bg-[#B39A70] disabled:opacity-60">
+                <span data-submit-label>Send private enquiry</span>
+                <Icon name="arrow-up-right" class="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" strokeWidth={1.4} />
+              </button>
+            </div>
+          </form>
+          <div data-testid="contact-success" data-enquiry-success hidden class="py-16">
+            <p class="font-display text-4xl">Thank you.</p>
+            <p class="mt-4 text-[#F6F1E8]/75 max-w-md">We have received your enquiry and will be in touch personally, by your preferred channel.</p>
+            <button type="button" data-enquiry-reset data-testid="contact-send-another" class="mt-8 link-line text-sm tracking-[0.12em] uppercase">Send another</button>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  </div>
+</BaseLayout>

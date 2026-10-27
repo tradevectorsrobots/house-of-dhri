@@ -1,0 +1,13 @@
+---
+// Fades and rises into place once 12% of it is in view.
+const { as: Tag = "div", class: className = "", delay = 0, y = 30, amount, ...rest } = Astro.props;
+---
+<Tag
+  class={className}
+  data-reveal
+  data-amount={amount}
+  style={`--reveal-delay: ${delay}s; --reveal-y: ${y}px`}
+  {...rest}
+>
+  <slot />
+</Tag>

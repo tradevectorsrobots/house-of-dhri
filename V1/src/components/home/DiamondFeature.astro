@@ -1,0 +1,56 @@
+---
+import Overline from "../Overline.astro";
+import Reveal from "../Reveal.astro";
+import MaskLines from "../MaskLines.astro";
+import Icon from "../Icon.astro";
+
+const SPECS = [
+  ["Type", "IIa — no measurable nitrogen"],
+  ["Growth", "Chemical vapour deposition"],
+  ["Composition", "Crystalline carbon, as in mined diamond"],
+  ["Disclosure", "Verified specifications, stone by stone"],
+];
+---
+<section data-testid="home-diamond" data-parallax-scope="diamond" class="on-stone bg-[#B9B4AB] text-[#26231F] overflow-hidden">
+  <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 sm:py-40 grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-10 items-center">
+    <div class="lg:col-span-6 relative">
+      <div class="relative aspect-square overflow-hidden rounded-full">
+        <img
+          src="/images/diamond.jpg"
+          alt="Loose round brilliant diamond on stone"
+          width="1264"
+          height="848"
+          loading="lazy"
+          decoding="async"
+          data-parallax="diamond"
+          style="transform: translateY(-12%) scale(1.3)"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,transparent_35%,rgba(38,35,31,0.75)_75%)]"></div>
+      </div>
+      <span class="absolute -bottom-2 left-4 sm:left-10 font-display italic text-[#5B4A2D] text-xl">fig. i — the stone</span>
+    </div>
+    <div class="lg:col-span-6 lg:pl-10">
+      <Overline light>Diamonds &amp; materials</Overline>
+      <h2 class="font-display font-light text-4xl sm:text-6xl leading-[1.02] mt-6">
+        <MaskLines inView lines={["Grown, not mined.", { em: "Disclosed, always.", class: "text-[#5B4A2D]" }]} />
+      </h2>
+      <Reveal delay={0.2}>
+        <p class="mt-8 text-[#26231F]/80 leading-relaxed max-w-lg">
+          We work with Type IIa CVD lab-grown diamonds — real diamonds, grown with precision. We share what we can verify, and nothing we cannot.
+        </p>
+      </Reveal>
+      <dl class="mt-12 border-t border-[#26231F]/15">
+        {SPECS.map(([k, v], i) => (
+          <Reveal delay={0.1 * i} y={16} class="grid grid-cols-[110px_1fr] sm:grid-cols-[160px_1fr] gap-4 py-5 border-b border-[#26231F]/15">
+            <dt class="overline text-[#5B4A2D] text-[0.68rem] pt-1">{k}</dt>
+            <dd class="font-display text-xl sm:text-2xl">{v}</dd>
+          </Reveal>
+        ))}
+      </dl>
+      <a href="/diamonds-and-materials" data-testid="home-diamonds-link" class="mt-10 inline-flex items-center gap-3 link-line text-sm tracking-[0.12em] uppercase">
+        Read our material notes <Icon name="arrow-up-right" class="h-4 w-4" strokeWidth={1.4} />
+      </a>
+    </div>
+  </div>
+</section>

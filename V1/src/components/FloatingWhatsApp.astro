@@ -1,0 +1,19 @@
+---
+import Icon from "./Icon.astro";
+import { waLink } from "../data/site.js";
+---
+<a
+  href={waLink()}
+  target="_blank"
+  rel="noreferrer"
+  data-testid="floating-whatsapp-btn"
+  aria-label="Enquire on WhatsApp"
+  class="floating-wa group fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-40 flex items-center gap-3 rounded-full bg-[#F6F1E8] text-[#26231F] pl-4 pr-5 py-3 shadow-[0_20px_50px_-20px_rgba(38,35,31,0.7)] ring-1 ring-[#B39A70]/40"
+>
+  <span class="relative flex h-2 w-2">
+    <span class="absolute inline-flex h-full w-full rounded-full bg-[#B39A70] opacity-60 animate-ping"></span>
+    <span class="relative inline-flex h-2 w-2 rounded-full bg-[#B39A70]"></span>
+  </span>
+  <Icon name="message-circle" class="h-4 w-4" strokeWidth={1.5} />
+  <span class="text-xs tracking-[0.14em] uppercase">Enquire</span>
+</a>

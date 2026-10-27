@@ -1,0 +1,30 @@
+---
+import { MONO_PATHS, MONO_VIEWBOX } from "../data/monogramPaths.js";
+---
+<div
+  data-testid="intro-curtain"
+  aria-hidden="true"
+  class="intro-curtain fixed inset-0 z-[70] bg-[#26231F] text-[#F6F1E8] flex-col items-center justify-center"
+>
+  <div class="relative h-44 sm:h-56 aspect-[482/769]">
+    <svg viewBox={MONO_VIEWBOX} class="mono-svg absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
+      {MONO_PATHS.map((d, i) => (
+        <path
+          class="mono-path"
+          d={d}
+          pathLength="1"
+          fill="none"
+          stroke="#D8C08F"
+          stroke-width="2.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style={`--delay: ${(0.15 + i * 0.1).toFixed(2)}s`}
+        />
+      ))}
+    </svg>
+    <img src="/brand/logo-monogram.webp" alt="" class="anim-fade absolute inset-0 h-full w-full" style="--delay: 1.55s; --dur: 0.8s" />
+    <div class="mono-shine absolute inset-0 pointer-events-none"></div>
+  </div>
+  <img src="/brand/logo-wordmark.webp" alt="House of Dhri" class="anim-rise h-5 sm:h-6 w-auto mt-8" style="--from-y: 12px; --delay: 1.85s; --dur: 0.9s" />
+  <p class="anim-fade mt-5 font-display italic text-xl text-[#CDB894]" style="--delay: 2.2s; --dur: 0.6s">dhṛ — to hold</p>
+</div>

@@ -1,0 +1,101 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+import { SITE_NAME, TAGLINE, DEFAULT_DESC } from "../data/site.js";
+import { absUrl, pageGraph, KEYWORDS } from "../data/seo.js";
+
+const {
+  title = null,
+  description = DEFAULT_DESC,
+  path = Astro.url.pathname.replace(/\.html$/, "").replace(/(.)\/$/, "$1"),
+  image = "/og-image.jpg",
+  imageAlt = "House of Dhri — Distinctive by design. Brilliant by nature.",
+  ogType = "website",
+  schema = [],
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — ${TAGLINE}`;
+const canonical = absUrl(path);
+const imageUrl = image.startsWith("http") ? image : absUrl(image);
+const graph = pageGraph({ path, title: fullTitle, description, extra: schema });
+---
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={KEYWORDS} />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
+    <meta name="theme-color" content="#26231F" />
+    <meta name="author" content={SITE_NAME} />
+    <meta name="geo.region" content="IN" />
+    <meta name="geo.placename" content="India" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en-IN" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {image === "/og-image.jpg" && <meta property="og:image:width" content="1200" />}
+    {image === "/og-image.jpg" && <meta property="og:image:height" content="630" />}
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          if (location.pathname === "/" && !sessionStorage.getItem("hod-intro")) {
+            d.classList.add("intro");
+            sessionStorage.setItem("hod-intro", "1");
+          }
+        } catch (e) {}
+        // If the site script never runs, drop the hidden start states so content stays readable.
+        setTimeout(function () {
+          if (!window.__hodReady) d.classList.remove("js", "intro");
+        }, 5000);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="grain">
+      <Nav />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+      <FloatingWhatsApp />
+    </div>
+    <script>
+      import "../scripts/site.js";
+    </script>
+  </body>
+</html>

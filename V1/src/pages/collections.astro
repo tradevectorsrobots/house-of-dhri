@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ClipImage from "../components/ClipImage.astro";
+import Reveal from "../components/Reveal.astro";
+import Overline from "../components/Overline.astro";
+import Icon from "../components/Icon.astro";
+import { COLLECTIONS } from "../data/site.js";
+import { productsIn } from "../data/products.js";
+import { breadcrumbList, absUrl } from "../data/seo.js";
+
+const schema = [
+  breadcrumbList([["Home", "/"], ["Collections", "/collections"]]),
+  {
+    "@type": "ItemList",
+    name: "House of Dhri collections",
+    itemListElement: COLLECTIONS.map((c, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: `${c.name} — ${c.line}`,
+      url: absUrl(`/collections/${c.slug}`),
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Collections"
+  description="Explore Prithvi bridal, Nitya everyday and Akarsha architectural fine jewellery with Type IIa CVD lab-grown diamonds. Price on enquiry."
+  schema={schema}
+>
+  <div data-testid="collections-page">
+    <PageHero
+      testid="collections-hero"
+      overline="Collections"
+      lines={["Three directions,", { em: "one language.", class: "text-[#B39A70]" }]}
+      intro="Prithvi, Nitya and Akarsha share one belief: design first. Every piece is price on enquiry, with specifications confirmed personally."
+    />
+    <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pb-28">
+      {COLLECTIONS.map((c, i) => (
+        <article data-testid={`collections-row-${c.slug}`} class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center py-16 sm:py-24 border-t border-[#F6F1E8]/15">
+          <ClipImage src={c.image} alt={`${c.name} collection mood`} class={`aspect-[4/5] lg:col-span-5 ${i % 2 ? "lg:order-2 lg:col-start-8" : ""}`} />
+          <Reveal class={`lg:col-span-6 ${i % 2 ? "lg:order-1 lg:col-start-1" : "lg:col-start-7"}`}>
+            <div class="flex items-center gap-4">
+              <span class="font-display italic text-3xl text-[#B39A70]">{c.numeral}</span>
+              <span data-testid={`collections-status-${c.slug}`} class="rounded-full border border-[#F6F1E8]/30 px-4 py-1.5 overline text-[0.65rem] text-[#F6F1E8]/80">{productsIn(c.slug).length} pieces</span>
+            </div>
+            <h2 class="font-display font-light uppercase tracking-[0.12em] text-5xl sm:text-7xl mt-6">{c.name}</h2>
+            <Overline class="mt-4">{c.line}</Overline>
+            <p class="mt-8 text-lg leading-relaxed text-[#F6F1E8]/80 max-w-md">{c.intro}</p>
+            <ul class="mt-8 flex flex-wrap gap-2">
+              {c.directions.map((d) => (
+                <li class="border border-[#F6F1E8]/15 px-3 py-1.5 text-sm text-[#F6F1E8]/80">{d}</li>
+              ))}
+            </ul>
+            <a href={`/collections/${c.slug}`} data-testid={`collections-open-${c.slug}`} class="group mt-10 inline-flex items-center gap-3 text-sm tracking-[0.12em] uppercase link-line">
+              Discover {c.name} <Icon name="arrow-up-right" class="h-4 w-4 transition-transform duration-500 group-hover:rotate-45" strokeWidth={1.4} />
+            </a>
+          </Reveal>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

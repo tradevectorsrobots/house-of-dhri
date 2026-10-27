@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+---
+<BaseLayout title="Page not found" description="This page has moved on. Return home to explore House of Dhri." path="/404" noindex>
+  <div data-testid="not-found-page" class="pb-32">
+    <PageHero overline="404" lines={["This page has", { em: "moved on.", class: "text-[#B39A70]" }]} />
+    <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
+      <a href="/" data-testid="not-found-home" class="link-line text-sm tracking-[0.12em] uppercase">Return home</a>
+    </div>
+  </div>
+</BaseLayout>

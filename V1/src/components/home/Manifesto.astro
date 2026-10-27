@@ -1,0 +1,18 @@
+---
+import Overline from "../Overline.astro";
+
+const TEXT =
+  "Dhri draws from the Sanskrit root dhṛ — to hold, to bear, to sustain. We make jewellery that holds what matters: a promise, a milestone, an everyday ritual, the person you are becoming.";
+const words = TEXT.split(" ");
+---
+<section data-testid="home-manifesto" data-manifesto class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-28 sm:py-40">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div class="lg:col-span-3">
+      <Overline>The name</Overline>
+      <p class="font-display italic text-6xl sm:text-7xl text-[#B39A70] mt-6">dhṛ</p>
+    </div>
+    <p class="lg:col-span-9 font-display text-3xl sm:text-5xl lg:text-[3.6rem] leading-[1.12] tracking-[-0.01em]">
+      {words.map((w) => <span data-word class="inline-block mr-[0.25em]">{w}</span>)}
+    </p>
+  </div>
+</section>

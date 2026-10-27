@@ -1,0 +1,42 @@
+---
+import Overline from "../Overline.astro";
+import Reveal from "../Reveal.astro";
+import MaskLines from "../MaskLines.astro";
+import ClipImage from "../ClipImage.astro";
+import Icon from "../Icon.astro";
+import { waLink } from "../../data/site.js";
+---
+<section data-testid="home-cta" class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pb-28 sm:pb-40">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <ClipImage src="/images/hand.jpg" alt="Hand wearing a diamond ring in warm light" class="lg:col-span-5 aspect-[4/5]" />
+    <div class="lg:col-span-6 lg:col-start-7">
+      <Overline>Private enquiries</Overline>
+      <h2 class="font-display font-light text-5xl sm:text-7xl leading-[0.95] mt-6">
+        <MaskLines inView lines={["Begin a", { em: "private", class: "text-[#B39A70]" }, "conversation."]} />
+      </h2>
+      <Reveal delay={0.2}>
+        <p class="mt-8 text-[#F6F1E8]/75 leading-relaxed max-w-md">
+          Prices, specifications, availability or a custom idea — speak directly with the house.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a
+            href={waLink()}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="cta-whatsapp-button"
+            class="inline-flex items-center gap-3 rounded-full bg-[#F6F1E8] text-[#26231F] px-7 py-4 text-sm tracking-[0.1em] uppercase transition-colors duration-300 hover:bg-[#B39A70]"
+          >
+            <Icon name="message-circle" class="h-4 w-4" strokeWidth={1.5} /> WhatsApp the house
+          </a>
+          <a
+            href="/contact"
+            data-testid="cta-enquiry-link"
+            class="inline-flex items-center rounded-full border border-[#F6F1E8]/40 px-7 py-4 text-sm tracking-[0.1em] uppercase transition-colors duration-300 hover:bg-[#F6F1E8] hover:text-[#26231F]"
+          >
+            Send an enquiry
+          </a>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

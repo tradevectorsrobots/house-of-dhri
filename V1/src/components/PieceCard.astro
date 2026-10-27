@@ -1,0 +1,25 @@
+---
+import Icon from "./Icon.astro";
+
+const { p, i = 0 } = Astro.props;
+---
+<div data-reveal data-amount="0.1" style={`--reveal-y: 40px; --reveal-delay: ${(i % 3) * 0.12}s`}>
+  <a href={`/pieces/${p.slug}`} data-testid={`product-card-${p.slug}`} class="group block">
+    <div class="relative aspect-[4/5] overflow-hidden bg-[#2E2A25]">
+      <img src={p.images[0]} alt={`${p.name} — ${p.line}`} width="1288" height="1920" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:opacity-0" />
+      {p.images[1] && (
+        <img src={p.images[1]} alt={`${p.name} worn`} width="1288" height="1920" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover opacity-0 scale-105 transition-[transform,opacity] duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-hover:scale-100" />
+      )}
+      <span class="absolute bottom-4 right-4 h-11 w-11 rounded-full bg-[#26231F]/90 backdrop-blur flex items-center justify-center translate-y-3 opacity-0 transition-[transform,opacity] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+        <Icon name="arrow-up-right" class="h-4 w-4" strokeWidth={1.4} />
+      </span>
+    </div>
+    <div class="mt-5 flex items-start justify-between gap-4">
+      <div>
+        <p class="font-display text-2xl sm:text-3xl leading-tight">{p.name}</p>
+        <p class="text-sm text-[#F6F1E8]/70 mt-1">{p.line}</p>
+      </div>
+      <p class="overline text-[0.62rem] text-[#CDB894] pt-2 whitespace-nowrap">Price on enquiry</p>
+    </div>
+  </a>
+</div>

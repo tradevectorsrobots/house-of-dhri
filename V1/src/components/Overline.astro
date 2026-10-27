@@ -1,0 +1,4 @@
+---
+const { class: className = "", light = false } = Astro.props;
+---
+<p class={`overline ${light ? "text-[#5B4A2D]" : "text-[#CDB894]"} ${className}`}><slot /></p>

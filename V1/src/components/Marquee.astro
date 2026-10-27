@@ -1,0 +1,26 @@
+---
+const ITEMS = [
+  "Type IIa CVD diamonds",
+  "Architectural silhouettes",
+  "Personal expression",
+  "Private consultations",
+  "Price on enquiry",
+];
+const rows = [false, true];
+---
+<section data-testid="editorial-marquee" class="overflow-hidden border-y border-[#F6F1E8]/15 py-8 sm:py-10">
+  <div class="marquee-track flex w-max">
+    {rows.map((hidden) => (
+      <div class="flex shrink-0 items-center" aria-hidden={hidden ? "true" : undefined}>
+        {ITEMS.map((t) => (
+          <span class="flex items-center">
+            <span class="font-display italic text-4xl sm:text-6xl lg:text-7xl font-light px-8 sm:px-12 whitespace-nowrap">{t}</span>
+            <svg viewBox="0 0 20 20" class="h-3 w-3 sm:h-4 sm:w-4 shrink-0" aria-hidden="true">
+              <circle cx="10" cy="10" r="4" fill="#B39A70" />
+            </svg>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

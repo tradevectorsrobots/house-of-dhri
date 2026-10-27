@@ -1,0 +1,46 @@
+---
+import Overline from "../Overline.astro";
+import Reveal from "../Reveal.astro";
+import Icon from "../Icon.astro";
+import QuickView from "../QuickView.astro";
+import { PRODUCTS } from "../../data/products.js";
+import { getCollection } from "../../data/site.js";
+
+const tracks = [false, true];
+---
+<section data-testid="home-pieces-row" class="pb-28 sm:pb-40 overflow-hidden">
+  <Reveal class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div>
+      <Overline>The first pieces</Overline>
+      <h2 class="font-display font-light text-4xl sm:text-6xl mt-5 leading-[1]">Nine pieces, three directions.</h2>
+    </div>
+    <a href="/collections" data-testid="home-pieces-view-all" class="link-line text-sm tracking-[0.12em] uppercase self-start sm:self-auto">View all collections</a>
+  </Reveal>
+  <div class="pieces-track flex w-max" data-pieces-track>
+    {tracks.map((hidden) => (
+      <div class="flex shrink-0 gap-5 sm:gap-6 pr-5 sm:pr-6" aria-hidden={hidden ? "true" : undefined}>
+        {PRODUCTS.map((p) => (
+          <button
+            type="button"
+            data-qv-open={p.slug}
+            tabindex={hidden ? "-1" : undefined}
+            data-testid={hidden ? undefined : `home-piece-${p.slug}`}
+            aria-label={hidden ? undefined : `Quick view ${p.name}`}
+            class="group block w-[240px] sm:w-[300px] shrink-0 text-left"
+          >
+            <div class="relative aspect-[4/5] overflow-hidden bg-[#2E2A25]">
+              <img src={p.images[0]} alt={hidden ? "" : p.name} width="1288" height="1920" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover transition-[transform,opacity] duration-1000 group-hover:scale-105 group-hover:opacity-0" />
+              <img src={p.images[1]} alt="" width="1288" height="1920" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
+              <span class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-[#26231F]/90 backdrop-blur px-4 py-2 overline text-[0.6rem] text-[#F6F1E8] opacity-100 sm:opacity-0 sm:translate-y-2 transition-[opacity,transform] duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                <Icon name="eye" class="h-3.5 w-3.5" strokeWidth={1.5} /> Quick view
+              </span>
+            </div>
+            <p class="overline text-[0.6rem] text-[#CDB894] mt-4">{getCollection(p.collection)?.name}</p>
+            <p class="font-display text-2xl mt-1">{p.name}</p>
+          </button>
+        ))}
+      </div>
+    ))}
+  </div>
+  <QuickView />
+</section>

@@ -1,0 +1,6 @@
+---
+const { src, alt, class: className = "", imgClass = "", testid } = Astro.props;
+---
+<div data-clip data-testid={testid} class={`overflow-hidden ${className}`}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" class={`h-full w-full object-cover ${imgClass}`} />
+</div>

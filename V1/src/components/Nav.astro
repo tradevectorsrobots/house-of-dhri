@@ -1,0 +1,68 @@
+---
+import Logo from "./Logo.astro";
+import { NAV_LINKS, waLink } from "../data/site.js";
+
+const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
+const isActive = (to) => path === to || path.startsWith(`${to}/`);
+// Collection banners start light, so the header text starts dark there.
+const light = /^\/collections\/.+/.test(path);
+---
+<header
+  data-testid="site-header"
+  data-light-start={light ? "true" : undefined}
+  class={`site-header fixed top-0 inset-x-0 z-50 transition-[background-color,padding,border-color] duration-500 border-b bg-transparent py-6 border-transparent ${light ? "text-[#26231F]" : "text-[#F6F1E8]"}`}
+>
+  <div class="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 flex items-center justify-between">
+    <Logo />
+    <nav class="hidden lg:flex items-center gap-10" aria-label="Main">
+      {NAV_LINKS.map((l) => (
+        <a
+          href={l.to}
+          data-testid={`nav-link-${l.to.slice(1)}`}
+          aria-current={isActive(l.to) ? "page" : undefined}
+          class={`link-line text-[0.82rem] tracking-[0.08em] ${isActive(l.to) ? "active" : ""}`}
+        >
+          {l.label}
+        </a>
+      ))}
+      <a
+        href={waLink()}
+        target="_blank"
+        rel="noreferrer"
+        data-testid="nav-whatsapp-link"
+        class="rounded-full border border-current px-5 py-2 text-[0.8rem] tracking-[0.08em] transition-colors duration-300 hover:bg-[#F6F1E8] hover:border-[#F6F1E8] hover:text-[#26231F]"
+      >
+        Consult on WhatsApp
+      </a>
+    </nav>
+    <button
+      type="button"
+      data-testid="mobile-menu-toggle"
+      data-menu-toggle
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      class="tap-target lg:hidden relative h-10 w-10 flex flex-col items-center justify-center gap-[6px]"
+      aria-label="Toggle menu"
+    >
+      <span class="burger-1 block h-px w-6 bg-current"></span>
+      <span class="burger-2 block h-px w-6 bg-current"></span>
+    </button>
+  </div>
+  <div
+    id="mobile-menu"
+    data-testid="mobile-menu"
+    data-lenis-prevent
+    class="mobile-menu lg:hidden fixed inset-x-0 top-0 -z-10 h-[100svh] bg-[#26231F] text-[#F6F1E8] px-6 pt-28 pb-10 flex flex-col overflow-y-auto"
+  >
+    {NAV_LINKS.map((l, i) => (
+      <div class="m-link" style={`--d: ${0.15 + i * 0.07}s`}>
+        <a href={l.to} data-testid={`mobile-link-${l.to.slice(1)}`} class="block font-display text-4xl py-3 border-b border-[#F6F1E8]/10">
+          {l.label}
+        </a>
+      </div>
+    ))}
+    <a href={waLink()} target="_blank" rel="noreferrer" data-testid="mobile-whatsapp-link" class="mt-auto rounded-full bg-[#F6F1E8] text-[#26231F] text-center py-4 tracking-[0.08em] text-sm">
+      Consult on WhatsApp
+    </a>
+  </div>
+</header>
