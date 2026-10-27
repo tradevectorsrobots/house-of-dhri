@@ -10,12 +10,8 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## 1. Go live (in progress)
 
-- [ ] **Send Vidhi the Cloudflare verification steps** (email draft is in Ankur's Gmail; WhatsApp text in chat)
-  Owner: Ankur
-- [ ] **Verify the Cloudflare account email** — click the link in the email from Cloudflare (or "Resend verification email" on dash.cloudflare.com)
-  Owner: Vidhi · Blocks everything below in this section
 - [ ] **Create the Cloudflare Pages project** from the GitHub repo — root `V1`, build `npm run build`, output `dist`
-  Owner: Claude · Blocked by: Cloudflare email verification
+  Owner: Claude
 - [ ] **Approve Cloudflare's access to the GitHub repo** (only `house-of-dhri`) when GitHub asks
   Owner: Ankur · Blocked by: Pages project setup
 - [ ] **Connect `houseofdhri.com` and `www.houseofdhri.com`** to the site and remove the old Wix records (email records stay)
@@ -67,7 +63,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **Decide the details** — who gets notified of a new enquiry and how (email / WhatsApp), who can read the inbox, how long enquiries are kept, and whether the form should still open WhatsApp after sending
   Owner: Ankur
 - [ ] **Create the D1 database** and enquiries table on Cloudflare
-  Owner: Claude · Blocked by: Cloudflare email verification, Pages project
+  Owner: Claude · Blocked by: Pages project
 - [ ] **Build the form backend** — Pages Function that checks and saves each enquiry to D1, with Cloudflare Turnstile spam protection
   Owner: Claude · After: database · ⏸ On hold: V1 frozen
 - [ ] **New-enquiry notification** to the chosen inbox
@@ -104,6 +100,8 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## Done
 
+- [x] Cloudflare account email verified — Vidhi (2026-10-28)
+- [x] Cloudflare verification steps sent to Vidhi — Ankur (2026-10-28)
 - [x] GitHub repo connected, V1 pushed to `main` — Claude (2026-10-28)
 - [x] Domain DNS moved from GoDaddy to Cloudflare; Cloudflare shows the domain active — Claude + Ankur (2026-10-28)
 - [x] Website V1 built and checked against the reference design — Claude (2026-10-28)
