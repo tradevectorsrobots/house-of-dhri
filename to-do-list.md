@@ -49,10 +49,34 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **Add social profile links** (Instagram etc.) to the site's structured data once they exist
   Owner: Ankur (send links) → Claude (add)
 
-## 3. Decisions needed
+## 3. AI search engines & indexing
 
-- [ ] **Enquiry form** — keep the WhatsApp hand-off, or send enquiries to an inbox (needs a small backend)
+- [ ] **Allow AI search crawlers** — confirm Cloudflare's AI Crawl Control lets ChatGPT, Claude, Perplexity, Gemini, Copilot and Apple crawlers through (robots.txt already allows them)
+  Owner: Claude · Blocked by: site live
+- [ ] **Add `llms.txt`** (and `llms-full.txt`) — plain-language summary of the house, collections, pieces, materials and contact, generated with each build
+  Owner: Claude
+- [ ] **IndexNow** — key file plus an automatic ping on every deploy, so Bing (which feeds ChatGPT search and Copilot), Yandex and others pick up changes within hours
+  Owner: Claude · Blocked by: site live
+- [ ] **Check indexing** — after 1–2 weeks, confirm all 17 pages are indexed in Google and Bing, and test how ChatGPT, Perplexity and Gemini answer questions about House of Dhri
+  Owner: Claude (report) + Ankur (review)
+
+## 4. Enquiry inbox (Cloudflare D1)
+
+- [ ] **Decide the details** — who gets notified of a new enquiry and how (email / WhatsApp), who can read the inbox, how long enquiries are kept, and whether the form should still open WhatsApp after sending
   Owner: Ankur
+- [ ] **Create the D1 database** and enquiries table on Cloudflare
+  Owner: Claude · Blocked by: Cloudflare email verification, Pages project
+- [ ] **Build the form backend** — Pages Function that checks and saves each enquiry to D1, with Cloudflare Turnstile spam protection
+  Owner: Claude · After: database
+- [ ] **New-enquiry notification** to the chosen inbox
+  Owner: Claude · After: decisions
+- [ ] **Private enquiries view** (password-protected, not indexed) to read and mark enquiries
+  Owner: Claude · After: backend
+- [ ] **Privacy note** on the contact page saying what is stored and why (India DPDP Act; GDPR for UK/EU visitors)
+  Owner: Ankur (approve wording) + Claude (draft)
+
+## 5. Decisions needed
+
 - [ ] **Natural diamonds, gold and silver** — mention them on the visible site, or remove them from the SEO structured data (Google expects the two to match)
   Owner: Ankur
 - [ ] **Scrolled header** — keep blur-only (as in the reference) or add the dark background
@@ -60,14 +84,14 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **@houseofdhri.com email** — confirm whether it's used; its GoDaddy records were kept as-is
   Owner: Ankur
 
-## 4. Website V2
+## 6. Website V2
 
 - [ ] **Brief for V2** — what should differ from V1 and why
   Owner: Ankur
 - [ ] **Build V2** in `V2/`
   Owner: Claude · After: brief
 
-## 5. Later
+## 7. Later
 
 - [ ] **Move the domain registration from GoDaddy to Cloudflare** — allowed from about 15 Dec 2026; needs the transfer code from GoDaddy and a 1-year renewal payment
   Owner: Ankur
