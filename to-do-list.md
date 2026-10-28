@@ -11,9 +11,9 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 ## 1. Go live (in progress)
 
 - [ ] **Create the Cloudflare Pages project** from the GitHub repo — root `V1`, build `npm run build`, output `dist`
-  Owner: Claude
+  Owner: Claude · Started; waiting on the GitHub approval below. Build setting needed: `NODE_VERSION=24.14.1` (Astro 7 needs Node ≥ 22.23.4)
 - [ ] **Approve Cloudflare's access to the GitHub repo** (only `house-of-dhri`) when GitHub asks
-  Owner: Ankur · Blocked by: Pages project setup
+  Owner: Ankur · Ready now: the GitHub authorization page is open in Chrome
 - [ ] **Connect `houseofdhri.com` and `www.houseofdhri.com`** to the site and remove the old Wix records (email records stay)
   Owner: Claude · Blocked by: first deploy
 - [ ] **Check the live site** — HTTPS, `www` → main domain redirect, every page, sitemap, robots.txt, mobile
@@ -84,10 +84,16 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## 6. Website V2
 
-- [ ] **Brief for V2** — what should differ from V1 and why
+- [ ] **Review V2** and decide which version goes live on houseofdhri.com (V1, V2, or V2 later)
+  Owner: Ankur + Vidhi
+- [ ] **Husband's name and photo for Our Story** — the page currently says "her husband"
   Owner: Ankur
-- [ ] **Build V2** in `V2/`
-  Owner: Claude · After: brief
+- [ ] **Confirm the facts the copy states** — all gold BIS hallmarked; engraving offered; the five workshop checks on the Diamonds page; "Designed and made in India"; same WhatsApp number as V1
+  Owner: Ankur + Vidhi → Claude (edit anything that is not right)
+- [ ] **Replace the stock photos with our own** — shot list and prompts for all 42 slots are in `V2/IMAGE-PROMPTS.md`; the hero needs Vidhi's real drawing of a ring plus a photo of the finished ring at the same angle
+  Owner: Vidhi (pieces, drawings) + photographer → Claude (swap in)
+- [ ] **Portraits of Vidhi and her husband** for Home and Our Story
+  Owner: Ankur + Vidhi
 
 ## 7. Later
 
@@ -106,3 +112,4 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [x] Domain DNS moved from GoDaddy to Cloudflare; Cloudflare shows the domain active — Claude + Ankur (2026-10-28)
 - [x] Website V1 built and checked against the reference design — Claude (2026-10-28)
 - [x] V1 frozen and tagged `v1.0` — Ankur + Claude (2026-10-28)
+- [x] V2 brief written and V2 built in `V2/` (11 pages, copy checker, SEO, mobile checks) — Ankur + Claude (2026-10-28)

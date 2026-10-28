@@ -1,0 +1,50 @@
+---
+// Pick a diamond shape to read what it is like. Works as a set of toggle buttons.
+const SHAPES = [
+  { key: "round", name: "Round", text: "The most sparkle of any shape. A safe choice that suits every setting.", svg: '<circle cx="24" cy="24" r="17"/><path d="M24 7v34M7 24h34M12 12l24 24M36 12 12 36"/>' },
+  { key: "oval", name: "Oval", text: "Looks larger than a round diamond of the same weight, and makes fingers look longer.", svg: '<ellipse cx="24" cy="24" rx="12.5" ry="18"/><path d="M24 6v36M11.5 24h25"/>' },
+  { key: "cushion", name: "Cushion", text: "A square with soft corners. Big, warm flashes of light.", svg: '<rect x="8" y="8" width="32" height="32" rx="9"/><path d="M8 24h32M24 8v32"/>' },
+  { key: "emerald", name: "Emerald", text: "Long step cut facets, like a hall of mirrors. Calm and elegant. It shows clarity, so choose a clean stone.", svg: '<path d="M16 5h16l5 5v28l-5 5H16l-5-5V10z"/><path d="M18 11h12l2 2v22l-2 2H18l-2-2V13z"/>' },
+  { key: "pear", name: "Pear", text: "Part round, part marquise. Usually worn with the point towards the fingertip.", svg: '<path d="M24 4c8 9.5 14 18 14 26a14 14 0 0 1-28 0c0-8 6-16.5 14-26z"/><path d="M24 4v40"/>' },
+  { key: "princess", name: "Princess", text: "A crisp square with a lot of sparkle. Modern and sharp.", svg: '<rect x="8" y="8" width="32" height="32"/><path d="M8 8l32 32M40 8 8 40"/>' },
+  { key: "marquise", name: "Marquise", text: "A long boat shape that makes the most of every carat.", svg: '<path d="M24 3c10 9 10 33 0 42-10-9-10-33 0-42z"/><path d="M24 3v42"/>' },
+  { key: "radiant", name: "Radiant", text: "A rectangle with trimmed corners and the sparkle of a round.", svg: '<path d="M14 6h20l4 4v28l-4 4H14l-4-4V10z"/><path d="M10 10l28 28M38 10 10 38"/>' },
+];
+---
+<div class="shapes" data-shapes>
+  <div class="shapes__grid" role="group" aria-label="Diamond shapes">
+    {SHAPES.map((s, i) => (
+      <button type="button" class="shapes__btn" data-shape={s.key} aria-pressed={i === 0 ? "true" : "false"} aria-controls="shape-note">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" aria-hidden="true" set:html={s.svg} />
+        <span>{s.name}</span>
+      </button>
+    ))}
+  </div>
+  <div id="shape-note" class="shapes__note" aria-live="polite">
+    {SHAPES.map((s, i) => (
+      <div data-shape-note={s.key} hidden={i !== 0}>
+        <h3>{s.name}</h3>
+        <p class="muted">{s.text}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .shapes { display: grid; gap: 2rem; }
+  @media (min-width: 900px) { .shapes { grid-template-columns: 7fr 5fr; align-items: center; } }
+  .shapes__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+  .shapes__btn {
+    display: grid; justify-items: center; gap: 0.5rem; padding: 1rem 0.25rem 0.85rem; min-height: 6.5rem;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--paper); cursor: pointer;
+    font-size: 0.9rem; color: var(--ink);
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .shapes__btn svg { width: 2.75rem; height: 2.75rem; color: var(--panna); transition: transform 0.35s var(--ease); }
+  .shapes__btn:hover { border-color: var(--ink); }
+  .shapes__btn[aria-pressed="true"] { background: var(--panna); border-color: var(--panna); color: var(--pearl); }
+  .shapes__btn[aria-pressed="true"] svg { color: var(--sona-light); transform: scale(1.08); }
+  .shapes__note { min-height: 9rem; }
+  .shapes__note h3 { font-size: var(--step-3); margin-bottom: 0.75rem; }
+  .shapes__note p { font-size: var(--step-1); max-width: 28rem; }
+</style>

@@ -1,0 +1,228 @@
+---
+import Base from "../layouts/Base.astro";
+import Img from "../components/Img.astro";
+import SketchReveal from "../components/SketchReveal.astro";
+import Trust from "../components/Trust.astro";
+import Steps from "../components/Steps.astro";
+import { STYLES } from "../data/designs.js";
+import { INDIA_CITIES, WORLD } from "../data/site.js";
+
+const SIGNATURE = [
+  { title: "Engagement rings", text: "Designed around the stone you choose, natural or lab grown.", image: "ring-on-hand", href: "/engagement-and-couple-rings/#engagement" },
+  { title: "Couple rings", text: "Two rings made to belong together, with names or a date inside.", image: "gold-bands", href: "/engagement-and-couple-rings/#couple" },
+  { title: "Anniversary bands", text: "A band that sits right beside the ring you already wear.", image: "anniversary-hand", href: "/engagement-and-couple-rings/#anniversary" },
+  { title: "Occasion earrings", text: "For your wedding, a festival or a birthday that matters.", image: "occasion-drops", href: "/engagement-and-couple-rings/#earrings" },
+];
+
+const STEPS = [
+  { title: "Tell us your idea", text: "On WhatsApp or a video call. Share photos, a budget and a date." },
+  { title: "Vidhi draws it", text: "A hand drawing you can change until it feels right." },
+  { title: "Choose your stones", text: "Natural or lab grown, each with its certificate." },
+  { title: "We make it", text: "Cast, set and polished in our own workshop." },
+  { title: "Check and wear", text: "Your piece comes with its certificate and a detailed bill." },
+];
+---
+<Base
+  description="Custom jewellery designed by Vidhi Parikh and made in house. Engagement rings, couple rings and fine jewellery in certified gold, silver and diamonds."
+  path="/"
+>
+  <section class="hero on-dark">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1>Drawn by hand. Made for you.</h1>
+        <p class="lede muted">
+          House of Dhri is a jewellery design house run by designer Vidhi Parikh and her husband, a diamond merchant. We design your piece, buy the stones ourselves and make it in our own workshop.
+        </p>
+        <div class="actions">
+          <a href="/contact/" class="btn btn--pearl">Start your design</a>
+          <a href="/engagement-and-couple-rings/" class="btn btn--line-light">See engagement rings</a>
+        </div>
+      </div>
+      <SketchReveal caption="Every piece starts as a drawing. Drag across the ring to compare." />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head"><h2>What you can count on</h2></div>
+      <Trust />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split founders">
+      <div class="founders__photos">
+        <div class="photo founders__a"><Img name="gouache-design" sizes="(min-width: 900px) 34vw, 70vw" /></div>
+        <div class="photo founders__b"><Img name="loupe" sizes="(min-width: 900px) 24vw, 55vw" /></div>
+      </div>
+      <div class="founders__text">
+        <h2>A designer and a diamond merchant</h2>
+        <p class="lede">Vidhi Parikh designs every piece we make. She draws by hand, and her own signature designs sit alongside the pieces she creates for clients.</p>
+        <p class="muted">Her husband is a diamond merchant. He buys diamonds directly and checks every stone before it reaches you, so you get more choice and a fair price.</p>
+        <p class="muted">Between them, they look after your piece from the first drawing to the final polish.</p>
+        <a href="/our-story/" class="text-link">Read our story</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="head">
+        <h2>What people come to us for</h2>
+        <p>Most of our work is personal. These are the pieces we are asked for most.</p>
+      </div>
+      <ul class="signature">
+        {SIGNATURE.map((s, i) => (
+          <li class={`signature__item ${i === 0 ? "signature__item--lead" : ""}`}>
+            <a href={s.href}>
+              <div class="photo signature__photo"><Img name={s.image} sizes={i === 0 ? "(min-width: 900px) 50vw, 80vw" : "(min-width: 900px) 25vw, 80vw"} widths={[400, 700, 1000, 1400]} /></div>
+              <h3>{s.title}</h3>
+              <p class="muted">{s.text}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <h2>Four ways we design</h2>
+        <p>From pieces you wear every day to full bridal sets. Everything is made to order.</p>
+      </div>
+      <ul class="styles" data-styles>
+        {STYLES.map((s) => (
+          <li>
+            <a href={`/collections/${s.slug}/`} class="styles__row">
+              <span class="styles__name">{s.name}</span>
+              <span class="styles__line muted">{s.line}</span>
+              <span class="photo styles__thumb"><Img name={s.image} sizes="(min-width: 900px) 18rem, 6rem" widths={[200, 400, 700]} /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section on-dark">
+    <div class="wrap">
+      <div class="head">
+        <h2>How your piece is made</h2>
+        <p>Five steps, the same for a simple band or a full bridal set.</p>
+      </div>
+      <Steps steps={STEPS} compact />
+      <p class="process__more"><a href="/bespoke/" class="text-link">See the full process</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--wide-right">
+      <div class="photo diamonds__photo"><Img name="loose-diamonds" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+      <div class="diamonds__text">
+        <h2>Natural or lab grown?</h2>
+        <p class="lede">Both are real diamonds. They look the same and are graded the same way. The difference is where they come from, and the price.</p>
+        <dl class="compare">
+          <div>
+            <dt>Natural</dt>
+            <dd class="muted">Formed deep in the earth over billions of years. Rarer, and usually costs more.</dd>
+          </div>
+          <div>
+            <dt>Lab grown (CVD)</dt>
+            <dd class="muted">Grown from a diamond seed in a few weeks. The same material, for less money.</dd>
+          </div>
+        </dl>
+        <a href="/diamonds-and-certification/" class="text-link">Read the full guide</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap split clients">
+      <div>
+        <h2>Wherever you are</h2>
+        <p class="lede muted">We work with clients across India and abroad. We share drawings and stone options over WhatsApp and video calls, and plan delivery with you.</p>
+      </div>
+      <div class="clients__lists">
+        <div>
+          <h3>In India</h3>
+          <ul class="chips">{INDIA_CITIES.map((c) => <li class="chip">{c}</li>)}</ul>
+        </div>
+        <div>
+          <h3>Abroad</h3>
+          <ul class="chips">{WORLD.map((c) => <li class="chip">{c}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: clamp(2.5rem, 1.5rem + 4vw, 5.5rem) clamp(3.5rem, 2rem + 5vw, 6.5rem); }
+  .hero__grid { display: grid; gap: clamp(2.5rem, 1rem + 4vw, 4.5rem); align-items: center; }
+  @media (min-width: 900px) { .hero__grid { grid-template-columns: 1fr 1fr; } }
+  .hero__copy { display: grid; gap: 1.75rem; }
+  .hero h1 { max-width: 11ch; }
+
+  .founders__photos { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); }
+  .founders__a { grid-column: 1 / 10; aspect-ratio: 4 / 3; }
+  .founders__b { grid-column: 6 / 13; aspect-ratio: 1; margin-top: -22%; box-shadow: 0 0 0 0.6rem var(--pearl); }
+  .founders__text { display: grid; gap: 1.25rem; justify-items: start; max-width: 34rem; }
+
+  .signature { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  .signature a { display: grid; gap: 0.5rem; text-decoration: none; }
+  .signature__photo { aspect-ratio: 4 / 5; margin-bottom: 0.5rem; }
+  .signature__photo :global(img) { transition: transform 0.6s var(--ease); }
+  .signature a:hover .signature__photo :global(img) { transform: scale(1.03); }
+  .signature a:hover h3 { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+  @media (max-width: 899px) {
+    .signature { grid-auto-flow: column; grid-auto-columns: min(78%, 22rem); overflow-x: auto; scroll-snap-type: x mandatory;
+      margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scrollbar-width: none; }
+    .signature::-webkit-scrollbar { display: none; }
+    .signature__item { scroll-snap-align: start; }
+  }
+  @media (min-width: 900px) {
+    .signature { grid-template-columns: 2fr 1fr 1fr; grid-template-rows: auto auto; column-gap: 1.5rem; row-gap: 2.5rem; }
+    .signature__item--lead { grid-row: span 2; }
+    .signature__item--lead .signature__photo { aspect-ratio: 4 / 5; }
+    .signature__item:not(.signature__item--lead) .signature__photo { aspect-ratio: 1; }
+    .signature__item:nth-child(4) { grid-column: 2 / 4; }
+    .signature__item:nth-child(4) .signature__photo { aspect-ratio: 2 / 1; }
+  }
+
+  .styles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .styles li { border-bottom: 1px solid var(--line); }
+  .styles__row {
+    display: grid; grid-template-columns: 1fr 5.5rem; grid-template-areas: "name thumb" "line thumb";
+    gap: 0.25rem 1.25rem; align-items: center; padding-block: 1.25rem; text-decoration: none;
+  }
+  .styles__name {
+    grid-area: name; font-family: var(--display); font-variation-settings: "SOFT" 100;
+    font-weight: 330; font-size: var(--step-5); line-height: 1; transition: color 0.3s var(--ease);
+  }
+  .styles__line { grid-area: line; }
+  .styles__thumb { grid-area: thumb; aspect-ratio: 1; }
+  @media (min-width: 900px) {
+    .styles__row { grid-template-columns: 1fr 1fr 9rem; grid-template-areas: "name line thumb"; padding-block: 1.5rem; }
+    .styles__thumb { aspect-ratio: 4 / 3; opacity: 0.35; filter: grayscale(1); transition: opacity 0.4s var(--ease), filter 0.4s var(--ease); }
+    .styles__row:hover .styles__thumb, .styles__row:focus-visible .styles__thumb { opacity: 1; filter: none; }
+    .styles__row:hover .styles__name { color: var(--manik); }
+  }
+
+  .process__more { margin-top: 2.5rem; }
+
+  .diamonds__photo { aspect-ratio: 16 / 10; }
+  .diamonds__text { display: grid; gap: 1.5rem; justify-items: start; }
+  .compare { display: grid; gap: 1.25rem; margin: 0; width: 100%; }
+  @media (min-width: 640px) { .compare { grid-template-columns: 1fr 1fr; } }
+  .compare div { padding-top: 1rem; border-top: 1px solid var(--sona); }
+  .compare dt { font-family: var(--display); font-variation-settings: "SOFT" 100; font-size: var(--step-2); margin-bottom: 0.4rem; }
+  .compare dd { margin: 0; }
+
+  .clients { align-items: start; }
+  .clients h2 { margin-bottom: 1.25rem; }
+  .clients__lists { display: grid; gap: 2rem; }
+  .clients__lists h3 { font-family: var(--text); font-size: 1rem; font-weight: 600; margin-bottom: 0.85rem; }
+  .clients .chip { cursor: default; }
+  .clients .chip:hover { border-color: var(--line); }
+</style>

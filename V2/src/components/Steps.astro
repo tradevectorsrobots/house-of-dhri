@@ -1,0 +1,35 @@
+---
+// The making process. Numbered because it is a real sequence.
+const { steps, compact = false } = Astro.props;
+---
+<ol class={`steps ${compact ? "steps--compact" : ""}`}>
+  {steps.map((s, i) => (
+    <li class="steps__item">
+      <span class="steps__n" aria-hidden="true">{i + 1}</span>
+      <div class="steps__body">
+        <h3>{s.title}</h3>
+        <p class="muted">{s.text}</p>
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: none; }
+  .steps__item {
+    display: grid; grid-template-columns: 3.25rem 1fr; gap: 1.25rem; padding-block: 1.75rem;
+    border-top: 1px solid var(--line); position: relative;
+  }
+  .steps__n {
+    display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 50%;
+    border: 1px solid var(--sona); font-family: var(--display); font-variation-settings: "SOFT" 100;
+    font-size: 1.35rem; color: var(--panna);
+  }
+  .steps__body { display: grid; gap: 0.5rem; max-width: 38rem; }
+  :global(.on-dark) .steps__item { border-color: var(--line-on-dark); }
+  :global(.on-dark) .steps__n { color: var(--sona-light); }
+  @media (min-width: 1000px) {
+    .steps--compact { grid-template-columns: repeat(5, 1fr); gap: 1.5rem; }
+    .steps--compact .steps__item { grid-template-columns: 1fr; gap: 1rem; padding-top: 1.5rem; }
+  }
+</style>

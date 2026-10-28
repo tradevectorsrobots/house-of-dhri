@@ -1,0 +1,26 @@
+---
+import Icon from "./Icon.astro";
+
+const ITEMS = [
+  { icon: "diamond", title: "Certified diamonds", text: "Natural and lab grown, each with a grading report from a gem lab." },
+  { icon: "hallmark", title: "Hallmarked gold", text: "BIS hallmarked, with a HUID code you can check yourself." },
+  { icon: "silver", title: "925 silver", text: "Sterling silver, stamped 925, for everyday and gifting pieces." },
+  { icon: "workshop", title: "Made in house", text: "Cast, set and polished in our own workshop, under our own eyes." },
+];
+---
+<ul class="trust">
+  {ITEMS.map((t) => (
+    <li>
+      <Icon name={t.icon} class="trust__icon" />
+      <h3>{t.title}</h3>
+      <p class="muted">{t.text}</p>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .trust { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .trust li { display: grid; gap: 0.5rem; align-content: start; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  .trust :global(.trust__icon) { width: 2rem; height: 2rem; color: var(--panna); stroke-width: 1.25; margin-bottom: 0.5rem; }
+  .trust h3 { font-size: var(--step-2); }
+</style>

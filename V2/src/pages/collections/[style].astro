@@ -1,0 +1,86 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import DesignCard from "../../components/DesignCard.astro";
+import Img from "../../components/Img.astro";
+import { STYLES, designsIn } from "../../data/designs.js";
+import { JEWELLERY_TYPES } from "../../data/site.js";
+import { breadcrumbs, productList, abs } from "../../data/seo.js";
+import { schemaImages } from "../../lib/images.js";
+
+export function getStaticPaths() {
+  return STYLES.map((s) => ({ params: { style: s.slug }, props: { s } }));
+}
+
+const { s } = Astro.props;
+const items = designsIn(s.slug);
+const types = JEWELLERY_TYPES.filter((t) => items.some((d) => d.type === t.key));
+const others = STYLES.filter((x) => x.slug !== s.slug);
+const urls = await schemaImages(items.map((d) => d.image));
+const path = `/collections/${s.slug}/`;
+
+const schema = [
+  breadcrumbs([["Home", "/"], ["Collections", "/collections/"], [s.name, path]]),
+  { "@type": "CollectionPage", "@id": `${abs(path)}#collection`, name: `${s.name} jewellery`, url: abs(path), description: s.intro },
+  productList(`${s.name} jewellery designs`, items, (n) => urls[n]),
+];
+---
+<Base
+  title={`${s.name} jewellery, made to order`}
+  description={`${s.line} ${s.name} jewellery designed by Vidhi Parikh and made to order in certified gold, silver and diamonds.`}
+  og={s.image}
+  schema={schema}
+>
+  <PageIntro title={`${s.name} jewellery`} lede={s.intro} crumbs={[["Home", "/"], ["Collections", "/collections/"], [s.name]]} />
+
+  <section class="section" id="designs">
+    <div class="wrap">
+      <div class="filters" data-filter=".designs > .design">
+        <ul class="chips" aria-label="Show designs by type">
+          <li><button type="button" class="chip" data-filter-chip="all" aria-pressed="true">All</button></li>
+          {types.map((t) => (
+            <li><button type="button" class="chip" data-filter-chip={t.key} aria-pressed="false">{t.label}</button></li>
+          ))}
+        </ul>
+        <p class="muted filters__status" data-filter-status aria-live="polite">Showing {items.length} designs</p>
+      </div>
+      <div class="designs">
+        {items.map((d) => <DesignCard d={d} />)}
+      </div>
+      <p class="note muted">Photos show the kind of piece we make. Every design is drawn and made to order for you, so it can change in size, stones and metal.</p>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="head"><h2>Other styles</h2></div>
+      <ul class="others">
+        {others.map((o) => (
+          <li>
+            <a href={`/collections/${o.slug}/`}>
+              <span class="photo others__photo"><Img name={o.image} sizes="(min-width: 900px) 26vw, 80vw" widths={[400, 700, 1000]} alt="" /></span>
+              <span class="others__name">{o.name}</span>
+              <span class="muted">{o.line}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .filters { display: grid; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .filters__status { font-size: 0.95rem; }
+  .designs { display: grid; gap: 3rem 1.5rem; }
+  @media (min-width: 640px) { .designs { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .designs { grid-template-columns: repeat(3, 1fr); } }
+  .designs > :global([hidden]) { display: none; }
+  .note { margin-top: 3rem; max-width: 40rem; font-size: 0.95rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+  .others { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; }
+  @media (min-width: 700px) { .others { grid-template-columns: repeat(3, 1fr); } }
+  .others a { display: grid; gap: 0.4rem; text-decoration: none; }
+  .others__photo { display: block; aspect-ratio: 4 / 3; margin-bottom: 0.5rem; }
+  .others__name { font-family: var(--display); font-variation-settings: "SOFT" 100; font-size: var(--step-3); line-height: 1.1; }
+  .others a:hover .others__name { color: var(--manik); }
+</style>

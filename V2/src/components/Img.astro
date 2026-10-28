@@ -1,0 +1,32 @@
+---
+// Responsive photo from src/assets/images by name, with alt text from data/images.js.
+import { Picture } from "astro:assets";
+import { IMAGES } from "../data/images.js";
+import { imageFile } from "../lib/images.js";
+
+const {
+  name,
+  sizes = "(min-width: 900px) 50vw, 100vw",
+  widths = [480, 800, 1200, 1600],
+  class: className = "",
+  eager = false,
+  alt,
+  position,
+} = Astro.props;
+
+const src = imageFile(name);
+const usable = widths.filter((w) => w <= src.width);
+---
+<Picture
+  src={src}
+  alt={alt ?? IMAGES[name]?.alt ?? ""}
+  widths={usable.length ? usable : [src.width]}
+  sizes={sizes}
+  formats={["avif", "webp"]}
+  fallbackFormat="jpg"
+  loading={eager ? "eager" : "lazy"}
+  fetchpriority={eager ? "high" : undefined}
+  decoding="async"
+  class={className}
+  style={position ? `object-position: ${position}` : undefined}
+/>

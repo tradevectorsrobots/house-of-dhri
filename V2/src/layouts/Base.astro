@@ -1,0 +1,89 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Icon from "../components/Icon.astro";
+import { SITE, wa } from "../data/site.js";
+import { abs, graph, KEYWORDS } from "../data/seo.js";
+import { shareImage } from "../lib/images.js";
+
+const {
+  title,
+  description,
+  path = Astro.url.pathname,
+  og = "hero-solitaire",
+  schema = [],
+  noindex = false,
+  bar = true,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | Custom jewellery and engagement rings`;
+const canonical = abs(path);
+const ogImage = await shareImage(og);
+const ld = graph({ path, title: fullTitle, description, extra: schema });
+---
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={KEYWORDS} />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
+    <meta name="theme-color" content="#0e3b32" />
+    <meta name="geo.region" content="IN" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en-IN" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <slot name="head" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body class={bar ? "has-bar" : undefined}>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    {bar && (
+      <div class="mobile-bar">
+        <a href={wa()} class="btn btn--ruby" target="_blank" rel="noopener"><Icon name="chat" /> Start your design on WhatsApp</a>
+      </div>
+    )}
+    <script>
+      import "../scripts/site.js";
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .mobile-bar { display: none; }
+  @media (max-width: 899px) {
+    .has-bar { padding-bottom: calc(4.75rem + env(safe-area-inset-bottom)); }
+    .mobile-bar {
+      display: block; position: fixed; inset: auto 0 0 0; z-index: 30;
+      padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+      pointer-events: none;
+    }
+    .mobile-bar .btn { width: 100%; pointer-events: auto; box-shadow: 0 10px 28px -8px rgb(10 44 37 / 0.55), 0 0 0 1px rgb(238 240 236 / 0.25); }
+  }
+</style>

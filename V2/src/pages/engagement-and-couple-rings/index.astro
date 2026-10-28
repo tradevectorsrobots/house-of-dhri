@@ -1,0 +1,160 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import DesignCard from "../../components/DesignCard.astro";
+import ShapePicker from "../../components/ShapePicker.astro";
+import Img from "../../components/Img.astro";
+import Faq from "../../components/Faq.astro";
+import { RINGS } from "../../data/designs.js";
+import { FAQ_RINGS } from "../../data/faqs.js";
+import { breadcrumbs, faqPage, productList } from "../../data/seo.js";
+import { schemaImages } from "../../lib/images.js";
+
+const METALS = [
+  { name: "Yellow gold", swatch: "#d4ad5f", text: "Warm and classic. Our most asked for colour in India." },
+  { name: "White gold", swatch: "#d9dcdc", text: "Bright and cool. Makes a white diamond look whiter." },
+  { name: "Rose gold", swatch: "#d9a08c", text: "Soft pink. Looks lovely on warm skin tones." },
+  { name: "925 silver", swatch: "#c4c8cc", text: "Lighter on the pocket. Good for fashion rings and gifts." },
+];
+
+const all = [...RINGS.engagement, ...RINGS.couple, ...RINGS.anniversary, ...RINGS.earrings];
+const urls = await schemaImages(all.map((d) => d.image));
+const schema = [
+  breadcrumbs([["Home", "/"], ["Engagement & couple rings", "/engagement-and-couple-rings/"]]),
+  productList("Engagement rings, couple rings and occasion earrings", all, (n) => urls[n]),
+  faqPage(FAQ_RINGS),
+];
+---
+<Base
+  title="Custom engagement rings and couple rings"
+  description="Custom engagement rings, couple rings, anniversary bands and occasion earrings with certified natural or lab grown diamonds, for India and abroad."
+  og="solitaire-satin"
+  schema={schema}
+>
+  <PageIntro
+    title="Rings for the two of you"
+    lede="Engagement rings, couple rings and anniversary bands, designed around your story and made to fit you both. And earrings for the days you will want to remember."
+    image="solitaire-satin"
+    ratio="4 / 3"
+    crumbs={[["Home", "/"], ["Engagement & couple rings"]]}
+  >
+    <nav class="jump" aria-label="On this page">
+      <ul class="chips">
+        <li><a class="chip" href="#engagement">Engagement rings</a></li>
+        <li><a class="chip" href="#couple">Couple rings</a></li>
+        <li><a class="chip" href="#anniversary">Anniversary bands</a></li>
+        <li><a class="chip" href="#earrings">Occasion earrings</a></li>
+      </ul>
+    </nav>
+  </PageIntro>
+
+  <section class="section" id="engagement">
+    <div class="wrap">
+      <div class="head">
+        <h2>Engagement rings</h2>
+        <p>Start with the stone or start with the setting. Vidhi will draw a ring around what matters most to you, and we will show you natural and lab grown diamonds to choose from.</p>
+      </div>
+      <div class="grid4">
+        {RINGS.engagement.map((d) => <DesignCard d={d} sizes="(min-width: 1100px) 22vw, (min-width: 640px) 45vw, 90vw" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="head">
+        <h2>Pick a diamond shape</h2>
+        <p>The shape changes the whole feel of a ring. Tap one to see what it is like.</p>
+      </div>
+      <ShapePicker />
+    </div>
+  </section>
+
+  <section class="section" id="couple">
+    <div class="wrap split split--wide-right couple">
+      <div class="photo couple__photo"><Img name="couple-hands" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+      <div class="couple__text">
+        <h2>Couple rings</h2>
+        <p class="lede">Two rings that belong together. They can match exactly, or be designed as a pair that is different for each of you.</p>
+        <ul class="ticks">
+          <li>Names, initials or a date engraved inside</li>
+          <li>Each ring sized and shaped for the hand that wears it</li>
+          <li>Plain, with diamonds, or one of each</li>
+        </ul>
+        <div class="grid2">
+          {RINGS.couple.map((d) => <DesignCard d={d} ratio="1 / 1" sizes="(min-width: 900px) 25vw, 45vw" />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="anniversary">
+    <div class="wrap">
+      <div class="head">
+        <h2>Anniversary bands</h2>
+        <p>A band for a milestone year, shaped to sit flush against the engagement ring you already wear. Bring your ring, or send us a photo and its size, and we will design around it.</p>
+      </div>
+      <div class="grid2 grid2--wide">
+        {RINGS.anniversary.map((d) => <DesignCard d={d} ratio="4 / 3" sizes="(min-width: 900px) 45vw, 90vw" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark" id="earrings">
+    <div class="wrap">
+      <div class="head">
+        <h2>Occasion earrings</h2>
+        <p>For your wedding, your sangeet, a festival or a birthday that matters. Made to go with the outfit, and to be worn again long after.</p>
+      </div>
+      <div class="grid3">
+        {RINGS.earrings.map((d) => <DesignCard d={d} sizes="(min-width: 1100px) 30vw, (min-width: 640px) 45vw, 90vw" />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <h2>Choose your metal</h2>
+        <p>Engagement rings and bands are usually made in 18 karat gold, which is strong enough to hold a diamond safely.</p>
+      </div>
+      <ul class="metals">
+        {METALS.map((m) => (
+          <li>
+            <span class="metals__swatch" style={`--swatch: ${m.swatch}`} aria-hidden="true"></span>
+            <h3>{m.name}</h3>
+            <p class="muted">{m.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Faq items={FAQ_RINGS} />
+</Base>
+
+<style>
+  .jump { margin-top: 0.5rem; }
+  .grid4, .grid3, .grid2 { display: grid; gap: 2.5rem 1.5rem; }
+  @media (min-width: 640px) { .grid4, .grid3 { grid-template-columns: 1fr 1fr; } .grid2 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .grid4 { grid-template-columns: repeat(4, 1fr); } .grid3 { grid-template-columns: repeat(3, 1fr); } }
+  .grid2--wide { max-width: 60rem; }
+
+  .couple { align-items: start; }
+  .couple__photo { aspect-ratio: 2 / 3; }
+  .couple__text { display: grid; gap: 1.5rem; }
+  .ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+  .ticks li { position: relative; padding-left: 1.6rem; }
+  .ticks li::before {
+    content: ""; position: absolute; left: 0; top: 0.55em; width: 0.6rem; height: 0.6rem;
+    border: 1px solid var(--sona); transform: rotate(45deg);
+  }
+
+  .metals { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+  .metals li { display: grid; gap: 0.5rem; align-content: start; }
+  .metals__swatch {
+    width: 3.25rem; height: 3.25rem; border-radius: 50%; margin-bottom: 0.5rem;
+    background: radial-gradient(circle at 35% 30%, #fff 0, var(--swatch) 38%, color-mix(in srgb, var(--swatch), #000 28%) 100%);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+  }
+</style>

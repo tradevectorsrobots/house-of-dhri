@@ -1,0 +1,79 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { NAV, SITE, INDIA_CITIES, WORLD, JEWELLERY_TYPES, wa } from "../data/site.js";
+
+const year = new Date().getFullYear();
+---
+<footer class="footer on-dark">
+  <div class="wrap footer__invite">
+    <h2>Tell us what you would like to make.</h2>
+    <div class="actions">
+      <a href={wa()} class="btn btn--pearl" target="_blank" rel="noopener"><Icon name="chat" /> Message us on WhatsApp</a>
+      <a href="/contact/" class="btn btn--line-light">Send an enquiry</a>
+    </div>
+  </div>
+
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <Logo size="lg" />
+      <p class="muted">Custom jewellery designed by {SITE.designer} and made in our own workshop, in certified gold, silver and diamonds.</p>
+    </div>
+    <nav aria-label="Footer">
+      <h3>Explore</h3>
+      <ul>
+        {NAV.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="/contact/">Talk to us</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h3>Jewellery</h3>
+      <ul>
+        {JEWELLERY_TYPES.map((t) => <li><a href={`/collections/#${t.key}`}>{t.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h3>Where our clients are</h3>
+      <p class="muted footer__places">{INDIA_CITIES.join(", ")}</p>
+      <p class="muted footer__places">{WORLD.join(", ")}</p>
+      <p class="footer__phone"><a href={wa()} target="_blank" rel="noopener">WhatsApp {SITE.whatsappDisplay}</a></p>
+    </div>
+  </div>
+
+  <div class="wrap footer__base">
+    <p>© {year} {SITE.name}</p>
+    <p>Designed and made in India</p>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--panna-deep); }
+  .footer__invite {
+    display: grid; gap: 1.75rem; padding-block: clamp(3.5rem, 2rem + 5vw, 6.5rem);
+    border-bottom: 1px solid var(--line-on-dark);
+  }
+  .footer__invite h2 { max-width: 16ch; }
+  @media (min-width: 900px) {
+    .footer__invite { grid-template-columns: 1fr auto; align-items: end; }
+  }
+  .footer__grid { display: grid; gap: 2.5rem; padding-block: 3.5rem; }
+  @media (min-width: 700px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1.3fr; } }
+  .footer__brand { display: grid; gap: 1.25rem; align-content: start; max-width: 24rem; }
+  .footer h3 {
+    font-family: var(--text); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.01em;
+    color: var(--sona-light); margin-bottom: 1rem;
+  }
+  .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
+  .footer ul a, .footer__phone a {
+    display: inline-block; padding-block: 0.3rem; text-decoration: none; color: rgb(238 240 236 / 0.85);
+  }
+  .footer ul a:hover, .footer__phone a:hover { color: var(--pearl); text-decoration: underline; text-underline-offset: 0.25em; }
+  .footer__places { font-size: 0.95rem; margin-bottom: 0.75rem; }
+  .footer__phone { margin-top: 1rem; }
+  .footer__base {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem;
+    padding-block: 1.5rem; border-top: 1px solid var(--line-on-dark);
+    font-size: 0.875rem; color: rgb(238 240 236 / 0.7);
+  }
+</style>

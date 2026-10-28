@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+import monogram from "../assets/logo-monogram.webp";
+import wordmark from "../assets/logo-wordmark.webp";
+
+const { size = "md" } = Astro.props;
+const h = size === "lg" ? 64 : 40;
+---
+<span class={`logo logo--${size}`}>
+  <Image src={monogram} alt="" height={h} densities={[1, 2]} loading="eager" class="logo__mark" />
+  <Image src={wordmark} alt="House of Dhri" height={Math.round(h * 0.34)} densities={[1, 2]} loading="eager" class="logo__word" />
+</span>
+
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 0.75rem; }
+  .logo__mark { height: 2.5rem; width: auto; }
+  .logo__word { height: 0.85rem; width: auto; }
+  .logo--lg .logo__mark { height: 4rem; }
+  .logo--lg .logo__word { height: 1.35rem; }
+  @media (max-width: 380px) {
+    .logo__word { height: 0.72rem; }
+  }
+</style>

@@ -1,0 +1,106 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import Img from "../../components/Img.astro";
+import { breadcrumbs, abs } from "../../data/seo.js";
+import { SITE } from "../../data/site.js";
+
+const VALUES = [
+  ["Your piece, not a catalogue piece", "Everything we make is drawn for one person. If you have seen something you like, we will make it yours rather than copy it."],
+  ["Paperwork you can check", "Diamond certificates, hallmarked gold and a bill that lists the metal, purity and weight. Nothing you have to take on trust."],
+  ["Made to be worn", "Settings that hold, bands that are comfortable and finishes that last. Jewellery is meant to come out of the box."],
+];
+
+const schema = [
+  breadcrumbs([["Home", "/"], ["Our story", "/our-story/"]]),
+  { "@type": "AboutPage", "@id": `${abs("/our-story/")}#about`, url: abs("/our-story/"), name: `About ${SITE.name}` },
+];
+---
+<Base
+  title="Our story: a designer and a diamond merchant"
+  description="Designer Vidhi Parikh draws every piece, her husband, a diamond merchant, sources the stones, and we make everything in our own workshop."
+  og="design-desk"
+  schema={schema}
+>
+  <PageIntro
+    title="A designer and a diamond merchant"
+    lede="House of Dhri is a family jewellery house. Vidhi Parikh designs. Her husband sources the diamonds. Every piece is made in our own workshop, under their eyes."
+    image="design-desk"
+    crumbs={[["Home", "/"], ["Our story"]]}
+  />
+
+  <section class="section">
+    <div class="wrap split person">
+      <div class="photo person__photo"><Img name="gouache-design" sizes="(min-width: 900px) 45vw, 100vw" /></div>
+      <div class="person__text">
+        <h2>Vidhi Parikh, designer</h2>
+        <p class="lede">Vidhi draws every piece we make. Some are her own signature designs. Many start with a client's idea, a photo or a memory.</p>
+        <p class="muted">Her designs often bring clean modern lines together with the detail of Indian craft. When you work with us, you work with her directly. She draws your piece, talks you through it and changes it until it is right.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split person person--flip">
+      <div class="photo person__photo"><Img name="loupe" sizes="(min-width: 900px) 45vw, 100vw" /></div>
+      <div class="person__text">
+        <h2>The diamond side of the house</h2>
+        <p class="lede">Vidhi's husband is a diamond merchant. He buys natural and lab grown diamonds directly and checks each one himself.</p>
+        <p class="muted">Buying direct means we can show you more stones side by side, explain plainly how they differ, and keep the price fair.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split person">
+      <div class="photo person__photo"><Img name="bench-hands" sizes="(min-width: 900px) 45vw, 100vw" /></div>
+      <div class="person__text">
+        <h2>Our workshop</h2>
+        <p class="lede">We do our own job work. Every piece is cast, set and polished in house.</p>
+        <p class="muted">The people who designed your piece and chose its stones are the same people who check it on the bench. Nothing is passed along a chain of strangers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark name">
+    <div class="wrap name__grid">
+      <p class="name__word" lang="sa-Latn">dhṛ</p>
+      <div class="name__text">
+        <h2>Why Dhri</h2>
+        <p class="lede muted">Dhri comes from the Sanskrit root dhṛ, which means to hold or to keep. We chose it because the jewellery people keep the longest is usually the jewellery made just for them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head"><h2>What we care about</h2></div>
+      <ul class="values">
+        {VALUES.map(([t, d]) => (
+          <li>
+            <h3>{t}</h3>
+            <p class="muted">{d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .person { align-items: center; }
+  .person__photo { aspect-ratio: 4 / 3; }
+  .person__text { display: grid; gap: 1.25rem; max-width: 34rem; }
+  @media (min-width: 900px) { .person--flip .person__photo { order: 2; } }
+
+  .name__grid { display: grid; gap: 1.5rem; align-items: center; }
+  @media (min-width: 900px) { .name__grid { grid-template-columns: 5fr 7fr; } }
+  .name__word {
+    font-family: var(--display); font-variation-settings: "SOFT" 100, "WONK" 1; font-weight: 300;
+    font-size: clamp(6rem, 3rem + 14vw, 14rem); line-height: 0.9; color: var(--sona);
+  }
+  .name__text { display: grid; gap: 1.25rem; max-width: 34rem; }
+
+  .values { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+  .values li { display: grid; gap: 0.6rem; align-content: start; padding-top: 1.25rem; border-top: 1px solid var(--sona); }
+</style>

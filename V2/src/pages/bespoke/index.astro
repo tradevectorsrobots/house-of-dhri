@@ -1,0 +1,118 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import Steps from "../../components/Steps.astro";
+import Img from "../../components/Img.astro";
+import Faq from "../../components/Faq.astro";
+import Icon from "../../components/Icon.astro";
+import { FAQ_BESPOKE } from "../../data/faqs.js";
+import { wa } from "../../data/site.js";
+import { breadcrumbs, faqPage } from "../../data/seo.js";
+
+const STEPS = [
+  {
+    title: "We talk",
+    text: "Tell us who the piece is for, the occasion, your budget and the date you need it. Send photos or screenshots of anything you like. We talk on WhatsApp or over a video call.",
+  },
+  {
+    title: "Vidhi draws your design",
+    text: "Vidhi sketches the piece by hand and shares the drawing with you. You can ask for changes, and we keep refining it until you are happy with every detail.",
+  },
+  {
+    title: "You choose the stones",
+    text: "We show you diamonds that suit the design and your budget, natural or lab grown, each with its grading certificate. Because we buy stones directly, you see real options side by side.",
+  },
+  {
+    title: "We make it in our workshop",
+    text: "Our craftsmen cast the metal, set the stones and polish the piece. Vidhi and her husband check it at each stage.",
+  },
+  {
+    title: "Final check and handover",
+    text: "We check the finish, the setting and the weight. Your piece comes to you with the diamond certificate and a bill that lists the metal, purity and weight.",
+  },
+];
+
+const BRING = [
+  { icon: "sketch", title: "A picture or a rough sketch", text: "Screenshots, photos of a piece you saw once, or lines on a napkin. All of it helps." },
+  { icon: "globe", title: "Where and when", text: "The occasion, the date and where you live, so we can plan the making and the delivery." },
+  { icon: "diamond", title: "A budget", text: "Tell us early. We design around it and choose stones that fit, rather than making you stretch." },
+];
+
+const schema = [breadcrumbs([["Home", "/"], ["Bespoke", "/bespoke/"]]), faqPage(FAQ_BESPOKE)];
+---
+<Base
+  title="Custom jewellery design and making"
+  description="How we make custom jewellery: a talk, a hand drawing by Vidhi Parikh, certified natural or lab grown diamonds, and making in our own workshop."
+  og="gouache-design"
+  schema={schema}
+>
+  <PageIntro
+    title="Made to your idea, from the first drawing"
+    lede="Bring us a photo, a feeling or a stone you love. Vidhi will draw it, refine it with you, and then we make it in our own workshop."
+    image="gouache-design"
+    ratio="4 / 3"
+    crumbs={[["Home", "/"], ["Bespoke"]]}
+  >
+    <div class="actions">
+      <a href="/contact/" class="btn btn--pearl">Start your design</a>
+      <a href={wa("Hello House of Dhri, I would like to design a custom piece.")} class="btn btn--line-light" target="_blank" rel="noopener"><Icon name="chat" /> Message us on WhatsApp</a>
+    </div>
+  </PageIntro>
+
+  <section class="section">
+    <div class="wrap split split--wide-left process">
+      <div>
+        <div class="head"><h2>Five steps from idea to finished piece</h2></div>
+        <Steps steps={STEPS} />
+      </div>
+      <div class="process__photos">
+        <div class="photo process__a"><Img name="design-desk" sizes="(min-width: 900px) 34vw, 100vw" /></div>
+        <div class="photo process__b"><Img name="emerald-loupe" sizes="(min-width: 900px) 34vw, 100vw" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="head"><h2>What to bring to the first conversation</h2></div>
+      <ul class="bring">
+        {BRING.map((b) => (
+          <li>
+            <Icon name={b.icon} class="bring__icon" />
+            <h3>{b.title}</h3>
+            <p class="muted">{b.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--wide-right workshop">
+      <div class="photo workshop__photo"><Img name="bench-tools" sizes="(min-width: 900px) 55vw, 100vw" /></div>
+      <div class="workshop__text">
+        <h2>Made in our own workshop</h2>
+        <p class="lede">We do our own job work. Casting, stone setting and polishing all happen in house, under our supervision.</p>
+        <p class="muted">That keeps the number of hands between you and your piece small. When you ask how something is being made, the person answering has seen it on the bench that day.</p>
+        <a href="/diamonds-and-certification/#workshop" class="text-link">How we check every piece</a>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={FAQ_BESPOKE} />
+</Base>
+
+<style>
+  .process { align-items: start; }
+  .process__photos { display: grid; gap: 1rem; }
+  .process__a { aspect-ratio: 4 / 5; }
+  .process__b { aspect-ratio: 3 / 2; }
+  @media (min-width: 900px) {
+    .process__photos { position: sticky; top: 6rem; padding-top: 6rem; }
+  }
+  .bring { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .bring li { display: grid; gap: 0.6rem; align-content: start; }
+  .bring :global(.bring__icon) { width: 2rem; height: 2rem; color: var(--panna); stroke-width: 1.25; margin-bottom: 0.4rem; }
+  .workshop__photo { aspect-ratio: 3 / 2; }
+  .workshop__text { display: grid; gap: 1.25rem; justify-items: start; }
+</style>

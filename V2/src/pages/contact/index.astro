@@ -1,0 +1,176 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import Icon from "../../components/Icon.astro";
+import { SITE, INDIA_CITIES, WORLD, wa } from "../../data/site.js";
+import { breadcrumbs, abs } from "../../data/seo.js";
+
+const PIECES = ["Engagement ring", "Couple rings", "Anniversary band", "Earrings", "Necklace or pendant", "Bangles or kada", "Payal", "Nose ring", "Religious stone ring", "Something else"];
+const STONES = ["Natural", "Lab grown", "Not sure yet"];
+const METALS = ["Yellow gold", "White gold", "Rose gold", "Silver", "Not sure yet"];
+
+const schema = [
+  breadcrumbs([["Home", "/"], ["Talk to us", "/contact/"]]),
+  { "@type": "ContactPage", "@id": `${abs("/contact/")}#contact`, url: abs("/contact/"), name: `Talk to ${SITE.name}` },
+];
+---
+<Base
+  title="Talk to us: enquiries from India and abroad"
+  description="Start a custom piece with House of Dhri. Message us on WhatsApp or send an enquiry from India, the USA, UK, Europe, Singapore, Hong Kong or the Middle East."
+  og="couple-hands"
+  schema={schema}
+  bar={false}
+>
+  <PageIntro
+    title="Talk to us"
+    lede="Tell us what you would like to make. Vidhi or her husband will reply to you personally, wherever you are."
+    crumbs={[["Home", "/"], ["Talk to us"]]}
+  />
+
+  <section class="section">
+    <div class="wrap contact">
+      <div class="contact__form">
+        <form data-enquiry data-wa={SITE.whatsapp} novalidate>
+          <p class="progress muted" data-progress aria-live="polite">Step 1 of 3</p>
+
+          <fieldset data-step data-need-choice>
+            <legend data-step-title tabindex="-1">What would you like to make?</legend>
+            <p class="hint muted">Choose as many as you like.</p>
+            <ul class="chips">
+              {PIECES.map((p) => (
+                <li><label class="chip"><input type="checkbox" name="piece" value={p} />{p}</label></li>
+              ))}
+            </ul>
+            <p class="error" data-choice-error hidden>Choose at least one to continue.</p>
+            <div class="actions"><button type="button" class="btn btn--ruby" data-next>Next</button></div>
+          </fieldset>
+
+          <fieldset data-step hidden>
+            <legend data-step-title tabindex="-1">A few details</legend>
+            <p class="hint muted">All optional. Skip anything you have not decided yet.</p>
+            <div class="group">
+              <p class="group__label" id="stone-label">Diamonds</p>
+              <ul class="chips" role="radiogroup" aria-labelledby="stone-label">
+                {STONES.map((s) => <li><label class="chip"><input type="radio" name="stone" value={s} />{s}</label></li>)}
+              </ul>
+            </div>
+            <div class="group">
+              <p class="group__label" id="metal-label">Metal</p>
+              <ul class="chips" role="radiogroup" aria-labelledby="metal-label">
+                {METALS.map((m) => <li><label class="chip"><input type="radio" name="metal" value={m} />{m}</label></li>)}
+              </ul>
+            </div>
+            <div class="fields">
+              <label class="field">
+                <span>Budget</span>
+                <input type="text" name="budget" placeholder="For example 1.5 lakh or 2,000 USD" autocomplete="off" />
+              </label>
+              <label class="field">
+                <span>When do you need it?</span>
+                <input type="text" name="date" placeholder="A date or a month" autocomplete="off" />
+              </label>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn--line" data-back>Back</button>
+              <button type="button" class="btn btn--ruby" data-next>Next</button>
+            </div>
+          </fieldset>
+
+          <fieldset data-step hidden>
+            <legend data-step-title tabindex="-1">About you</legend>
+            <div class="fields">
+              <label class="field">
+                <span>Your name</span>
+                <input type="text" name="name" required autocomplete="name" />
+              </label>
+              <label class="field">
+                <span>City and country</span>
+                <input type="text" name="place" required autocomplete="address-level2" placeholder="For example Surat, India" />
+              </label>
+              <label class="field field--wide">
+                <span>Email (optional)</span>
+                <input type="email" name="email" autocomplete="email" inputmode="email" />
+              </label>
+              <label class="field field--wide">
+                <span>Anything else we should know (optional)</span>
+                <textarea name="message" rows="4"></textarea>
+              </label>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn--line" data-back>Back</button>
+              <button type="submit" class="btn btn--ruby"><Icon name="chat" /> Send on WhatsApp</button>
+            </div>
+            <p class="hint muted">This opens WhatsApp with your message written out. Press send there and we will reply personally.</p>
+          </fieldset>
+        </form>
+
+        <div class="done" data-enquiry-done hidden>
+          <h2 tabindex="-1">Your message is ready in WhatsApp</h2>
+          <p class="muted">Press send in WhatsApp and we will reply personally. If WhatsApp did not open, use the button below.</p>
+          <div class="actions">
+            <a class="btn btn--ruby" href={wa()} target="_blank" rel="noopener"><Icon name="chat" /> Open WhatsApp again</a>
+            <button type="button" class="btn btn--line" data-enquiry-restart>Start a new enquiry</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="contact__side on-dark" aria-label="Other ways to reach us">
+        <div>
+          <h2>Prefer to just message?</h2>
+          <p class="muted">Send a photo, a question or a hello.</p>
+          <a href={wa()} class="btn btn--pearl" target="_blank" rel="noopener"><Icon name="chat" /> WhatsApp {SITE.whatsappDisplay}</a>
+        </div>
+        <div>
+          <h3>Clients in India</h3>
+          <p class="muted">{INDIA_CITIES.join(", ")}, and anywhere else in India.</p>
+        </div>
+        <div>
+          <h3>Clients abroad</h3>
+          <p class="muted">{WORLD.join(", ")}. We share drawings and stones over WhatsApp and video calls, and plan delivery to your country with you.</p>
+        </div>
+        <div>
+          <h3>Time zones</h3>
+          <p class="muted">Tell us where you are and we will set up calls at a time that suits you.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 1000px) { .contact { grid-template-columns: 7fr 5fr; gap: 4rem; } }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 1.25rem; min-width: 0; }
+  legend {
+    padding: 0; margin-bottom: 0.25rem; font-family: var(--display); font-variation-settings: "SOFT" 100;
+    font-weight: 380; font-size: var(--step-4); line-height: 1.1;
+  }
+  legend:focus { outline: none; }
+  .progress { font-size: 0.9rem; margin-bottom: 1rem; }
+  .hint { font-size: 0.95rem; }
+  .chip { position: relative; }
+  .chip:has(input:focus-visible) { outline: 2px solid var(--manik); outline-offset: 2px; }
+  .error { color: var(--manik); font-weight: 550; }
+  .group { display: grid; gap: 0.75rem; }
+  .group__label { font-weight: 600; }
+  .fields { display: grid; gap: 1.25rem; }
+  @media (min-width: 640px) { .fields { grid-template-columns: 1fr 1fr; } .field--wide { grid-column: 1 / -1; } }
+  .field { display: grid; gap: 0.45rem; font-weight: 600; font-size: 0.95rem; }
+  .field input, .field textarea {
+    width: 100%; min-height: 3rem; padding: 0.75rem 0.9rem; border: 1px solid rgb(20 35 30 / 0.3);
+    border-radius: 8px; background: var(--paper); font-size: 1rem; font-weight: 400;
+  }
+  .field textarea { resize: vertical; }
+  .field input:focus-visible, .field textarea:focus-visible { outline: 2px solid var(--manik); outline-offset: 1px; border-color: transparent; }
+  .field input:user-invalid { border-color: var(--manik); }
+  .actions { margin-top: 0.5rem; }
+  .done { display: grid; gap: 1rem; padding: 2rem; background: var(--mist); border-radius: 8px; }
+  .done h2 { font-size: var(--step-4); }
+  .done h2:focus { outline: none; }
+
+  .contact__side { display: grid; gap: 2rem; padding: clamp(1.75rem, 1rem + 2vw, 2.75rem); border-radius: 8px; }
+  .contact__side > div { display: grid; gap: 0.75rem; justify-items: start; }
+  .contact__side > div + div { padding-top: 1.5rem; border-top: 1px solid var(--line-on-dark); }
+  .contact__side h2 { font-size: var(--step-3); }
+  .contact__side h3 { font-family: var(--text); font-size: 1rem; font-weight: 600; color: var(--sona-light); }
+</style>

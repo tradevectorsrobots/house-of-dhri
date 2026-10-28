@@ -1,0 +1,56 @@
+---
+// Drag (or use arrow keys) to move between the drawing and the finished piece.
+import Img from "./Img.astro";
+
+const { photo = "hero-solitaire", sketch = "hero-solitaire-sketch", caption } = Astro.props;
+---
+<figure class="reveal" data-reveal>
+  <div class="reveal__stage photo" data-reveal-stage style="--pos: 50%">
+    <Img name={photo} class="reveal__img" sizes="(min-width: 900px) 46vw, 100vw" eager />
+    <div class="reveal__sketch" aria-hidden="true">
+      <Img name={sketch} class="reveal__img" sizes="(min-width: 900px) 46vw, 100vw" eager alt="" />
+    </div>
+    <span class="reveal__tag reveal__tag--left" aria-hidden="true">Drawing</span>
+    <span class="reveal__tag reveal__tag--right" aria-hidden="true">Finished ring</span>
+    <span class="reveal__handle" aria-hidden="true"><span class="reveal__knob"></span></span>
+    <label class="sr-only" for="reveal-range">Show more of the drawing or of the finished ring</label>
+    <input id="reveal-range" class="reveal__range" type="range" min="0" max="100" value="50" data-reveal-range />
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .reveal { margin: 0; display: grid; gap: 0.9rem; }
+  .reveal__stage {
+    position: relative; aspect-ratio: 1; touch-action: pan-y; cursor: ew-resize; user-select: none;
+    background: var(--panna-deep); box-shadow: 0 0 0 1px var(--line-on-dark);
+  }
+  .reveal__stage :global(picture), .reveal__stage :global(.reveal__img) {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    pointer-events: none; -webkit-user-drag: none;
+  }
+  .reveal__sketch { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .reveal__handle {
+    position: absolute; top: 0; bottom: 0; left: var(--pos); width: 0;
+    border-left: 1px solid var(--sona-light); pointer-events: none;
+  }
+  .reveal__knob {
+    position: absolute; top: 50%; left: 0; width: 3rem; height: 3rem; translate: -50% -50%;
+    border-radius: 50%; background: var(--pearl); box-shadow: 0 2px 14px rgb(10 44 37 / 0.35);
+  }
+  .reveal__knob::before, .reveal__knob::after {
+    content: ""; position: absolute; top: 50%; width: 0.5rem; height: 0.5rem;
+    border: solid var(--panna); border-width: 0 0 1.5px 1.5px;
+  }
+  .reveal__knob::before { left: 0.8rem; transform: translateY(-50%) rotate(45deg); }
+  .reveal__knob::after { right: 0.8rem; transform: translateY(-50%) rotate(-135deg); }
+  .reveal__tag {
+    position: absolute; top: 1rem; padding: 0.35rem 0.75rem; border-radius: 999px;
+    font-size: 0.85rem; background: rgb(10 44 37 / 0.6); color: var(--pearl); backdrop-filter: blur(6px);
+  }
+  .reveal__tag--left { left: 1rem; }
+  .reveal__tag--right { right: 1rem; background: rgb(238 240 236 / 0.75); color: var(--ink); }
+  .reveal__range { position: absolute; inset: auto 0 0 0; width: 100%; opacity: 0; pointer-events: none; }
+  .reveal__stage:has(.reveal__range:focus-visible) { outline: 2px solid var(--sona-light); outline-offset: 4px; }
+  .reveal figcaption { font-size: 0.95rem; color: rgb(238 240 236 / 0.74); }
+</style>

@@ -1,0 +1,111 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import Img from "../../components/Img.astro";
+import { STYLES, DESIGNS } from "../../data/designs.js";
+import { JEWELLERY_TYPES } from "../../data/site.js";
+import { breadcrumbs, abs } from "../../data/seo.js";
+
+const TYPE_TEXT = {
+  rings: "Engagement rings, bands, cocktail rings and everyday stacks.",
+  "stone-rings": "Your astrological or religious stone, set in gold or silver the way you want it.",
+  bangles: "Slim everyday bangles through to full bridal sets.",
+  kada: "Solid kada in gold or silver, plain or patterned.",
+  payal: "Anklets in silver and gold, from fine chains to traditional payal with bells.",
+  necklaces: "Chains, chokers, layered pieces and bridal necklaces.",
+  pendants: "Solitaires, halos and pendants that mean something to you.",
+  earrings: "Studs, hoops, drops and chandeliers for every occasion.",
+  "nose-rings": "Small studs and hoops for every day, and bridal nath.",
+};
+
+const stylesFor = (type) => STYLES.filter((s) => DESIGNS.some((d) => d.style === s.slug && d.type === type));
+
+const schema = [
+  breadcrumbs([["Home", "/"], ["Collections", "/collections/"]]),
+  {
+    "@type": "ItemList",
+    name: "House of Dhri collections",
+    itemListElement: STYLES.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: `${s.name} jewellery`, url: abs(`/collections/${s.slug}/`) })),
+  },
+];
+---
+<Base
+  title="Jewellery collections in four styles"
+  description="Made to order rings, bangles, kada, payal, necklaces, pendants, earrings and nose rings in modern, art, classical and traditional styles."
+  og="set-on-bust"
+  schema={schema}
+>
+  <PageIntro
+    title="Four ways we design"
+    lede="Everything we make is made to order, in certified gold, 925 silver and diamonds. These four styles show the range of what Vidhi designs, from the everyday to the bridal."
+    image="necklace-bust"
+    crumbs={[["Home", "/"], ["Collections"]]}
+  />
+
+  <section class="section">
+    <div class="wrap styles">
+      {STYLES.map((s, i) => {
+        const types = JEWELLERY_TYPES.filter((t) => DESIGNS.some((d) => d.style === s.slug && d.type === t.key));
+        return (
+          <article class={`style ${i % 2 ? "style--flip" : ""}`}>
+            <a href={`/collections/${s.slug}/`} class="photo style__photo" tabindex="-1" aria-hidden="true">
+              <Img name={s.image} sizes="(min-width: 900px) 40vw, 100vw" alt="" />
+            </a>
+            <div class="style__text">
+              <h2><a href={`/collections/${s.slug}/`}>{s.name}</a></h2>
+              <p class="lede">{s.line}</p>
+              <p class="muted">{s.intro}</p>
+              <p class="style__types">{types.map((t) => t.label).join(", ")}</p>
+              <a href={`/collections/${s.slug}/`} class="btn btn--line">See {s.name.toLowerCase()} designs</a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap">
+      <div class="head">
+        <h2>Every kind of jewellery</h2>
+        <p>If it is worn, we can design it. Choose a type to see ideas in each style.</p>
+      </div>
+      <ul class="types">
+        {JEWELLERY_TYPES.map((t) => (
+          <li id={t.key}>
+            <h3>{t.label}</h3>
+            <p class="muted">{TYPE_TEXT[t.key]}</p>
+            <ul class="chips">
+              {stylesFor(t.key).map((s) => (
+                <li><a class="chip" href={`/collections/${s.slug}/#${t.key}`}>{s.name}</a></li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .styles { display: grid; gap: clamp(3.5rem, 2rem + 5vw, 7rem); }
+  .style { display: grid; gap: 1.75rem; align-items: center; }
+  @media (min-width: 900px) {
+    .style { grid-template-columns: 5fr 6fr; gap: 4rem; }
+    .style--flip .style__photo { order: 2; }
+  }
+  .style__photo { aspect-ratio: 4 / 5; }
+  .style__photo :global(img) { transition: transform 0.7s var(--ease); }
+  .style__photo:hover :global(img) { transform: scale(1.03); }
+  .style__text { display: grid; gap: 1.1rem; justify-items: start; max-width: 34rem; }
+  .style h2 { font-size: var(--step-6); font-weight: 320; }
+  .style h2 a { text-decoration: none; }
+  .style h2 a:hover { color: var(--manik); }
+  .style__types { font-size: 0.95rem; padding-top: 1rem; border-top: 1px solid var(--line); width: 100%; }
+  .types { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  @media (min-width: 700px) { .types { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .types { grid-template-columns: repeat(3, 1fr); } }
+  .types > li { display: grid; gap: 0.6rem; align-content: start; padding: 1.75rem; background: var(--paper); scroll-margin-top: 6rem; }
+  .types > li:target { box-shadow: inset 0 0 0 2px var(--manik); }
+  .types .chips { margin-top: 0.5rem; }
+</style>
