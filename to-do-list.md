@@ -8,16 +8,12 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ---
 
-## 1. Go live (in progress)
+## 1. Go live
 
-- [ ] **Create the Cloudflare Pages project** from the GitHub repo — root `V1`, build `npm run build`, output `dist`
-  Owner: Claude · Started; waiting on the GitHub approval below. Build setting needed: `NODE_VERSION=24.14.1` (Astro 7 needs Node ≥ 22.23.4)
-- [ ] **Approve Cloudflare's access to the GitHub repo** (only `house-of-dhri`) when GitHub asks
-  Owner: Ankur · Ready now: the GitHub authorization page is open in Chrome
-- [ ] **Connect `houseofdhri.com` and `www.houseofdhri.com`** to the site and remove the old Wix records (email records stay)
-  Owner: Claude · Blocked by: first deploy
-- [ ] **Check the live site** — HTTPS, `www` → main domain redirect, every page, sitemap, robots.txt, mobile
-  Owner: Claude · Blocked by: domain connected
+> **Live:** V1 is on https://houseofdhri.com since 2026-10-28 (Cloudflare Pages project `house-of-dhri`, root `V1`). Every push to `main` redeploys it. Switching to V2 later = change the root directory to `V2` in the Pages settings.
+
+- [ ] **Limit Cloudflare's GitHub access to the `house-of-dhri` repo** — it was installed with access to all repositories. GitHub → Settings → Applications → Cloudflare Workers and Pages → Configure → Only select repositories
+  Owner: Ankur
 
 ## 2. Google presence
 
@@ -33,7 +29,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **Google Business Profile — create and verify** at business.google.com (Google sends a code by video, phone or post)
   Owner: Ankur (Vidhi can be added as manager) · After: content ready
 - [ ] **Google Search (Search Console)** — add `houseofdhri.com`, verify through Cloudflare DNS, submit `sitemap.xml`, request indexing of the home and collection pages
-  Owner: Ankur (Google account) + Claude (DNS record, sitemap, indexing requests) · Blocked by: site live
+  Owner: Ankur (Google account) + Claude (DNS record, sitemap, indexing requests) · Ready now: site is live
 - [ ] **Bing Webmaster Tools** — import from Search Console, submit sitemap
   Owner: Ankur + Claude · After: Search Console
 - [ ] **Google Analytics (GA4) — create the property** for `houseofdhri.com` and share the Measurement ID (`G-…`)
@@ -50,11 +46,11 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 ## 3. AI search engines & indexing
 
 - [ ] **Allow AI search crawlers** — confirm Cloudflare's AI Crawl Control lets ChatGPT, Claude, Perplexity, Gemini, Copilot and Apple crawlers through (robots.txt already allows them)
-  Owner: Claude · Blocked by: site live
+  Owner: Claude · Ready now: site is live
 - [ ] **Add `llms.txt`** (and `llms-full.txt`) — plain-language summary of the house, collections, pieces, materials and contact, generated with each build
   Owner: Claude · ⏸ On hold: V1 frozen
 - [ ] **IndexNow** — key file plus an automatic ping on every deploy, so Bing (which feeds ChatGPT search and Copilot), Yandex and others pick up changes within hours
-  Owner: Claude · Blocked by: site live · ⏸ On hold: V1 frozen
+  Owner: Claude · ⏸ On hold: V1 frozen
 - [ ] **Check indexing** — after 1–2 weeks, confirm all 17 pages are indexed in Google and Bing, and test how ChatGPT, Perplexity and Gemini answer questions about House of Dhri
   Owner: Claude (report) + Ankur (review)
 
@@ -63,7 +59,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **Decide the details** — who gets notified of a new enquiry and how (email / WhatsApp), who can read the inbox, how long enquiries are kept, and whether the form should still open WhatsApp after sending
   Owner: Ankur
 - [ ] **Create the D1 database** and enquiries table on Cloudflare
-  Owner: Claude · Blocked by: Pages project
+  Owner: Claude · After: details decided
 - [ ] **Build the form backend** — Pages Function that checks and saves each enquiry to D1, with Cloudflare Turnstile spam protection
   Owner: Claude · After: database · ⏸ On hold: V1 frozen
 - [ ] **New-enquiry notification** to the chosen inbox
@@ -84,7 +80,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## 6. Website V2
 
-- [ ] **Review V2** and decide which version goes live on houseofdhri.com (V1, V2, or V2 later)
+- [ ] **Review V2** and decide whether it replaces V1 on houseofdhri.com (V1 is live now; switching is one setting in Cloudflare Pages)
   Owner: Ankur + Vidhi
 - [ ] **Husband's name and photo for Our Story** — the page currently says "her husband"
   Owner: Ankur
@@ -106,6 +102,10 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## Done
 
+- [x] `houseofdhri.com` and `www.houseofdhri.com` connected to the Pages project; Wix records replaced, email records kept; `www` → `houseofdhri.com` 301 redirect rule (keeps path and query) — Claude, approved by Ankur (2026-10-28)
+- [x] Live site checked — HTTPS, `http` and `www` redirects, all 17 sitemap pages 200, 404 page, robots.txt, canonical and share image, no JS errors on mobile or desktop — Claude (2026-10-28)
+- [x] Cloudflare Pages project `house-of-dhri` created and V1 deployed to `house-of-dhri.pages.dev`; all 17 pages, sitemap and robots.txt load (root `V1`, `npm run build`, `dist`, `NODE_VERSION=24.14.1`) — Claude (2026-10-28)
+- [x] Cloudflare given access to GitHub — Ankur (2026-10-28)
 - [x] Cloudflare account email verified — Vidhi (2026-10-28)
 - [x] Cloudflare verification steps sent to Vidhi — Ankur (2026-10-28)
 - [x] GitHub repo connected, V1 pushed to `main` — Claude (2026-10-28)
