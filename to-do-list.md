@@ -80,7 +80,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## 6. Website V2
 
-- [ ] **Review V2** and decide whether it replaces V1 on houseofdhri.com (V1 is live now; switching is one setting in Cloudflare Pages)
+- [ ] **Review V2** and decide whether it replaces V1 on houseofdhri.com (V1 is live now; switching is one setting in Cloudflare Pages). Preview: https://house-of-dhri-v2.pages.dev
   Owner: Ankur + Vidhi
 - [ ] **Husband's name and photo for Our Story** — the page currently says "her husband"
   Owner: Ankur
@@ -102,6 +102,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## Done
 
+- [x] V2 preview site at `house-of-dhri-v2.pages.dev` (Pages project `house-of-dhri-v2`, root `V2`, rebuilds on every push; kept out of search results) — Claude (2026-10-28)
 - [x] `houseofdhri.com` and `www.houseofdhri.com` connected to the Pages project; Wix records replaced, email records kept; `www` → `houseofdhri.com` 301 redirect rule (keeps path and query) — Claude, approved by Ankur (2026-10-28)
 - [x] Live site checked — HTTPS, `http` and `www` redirects, all 17 sitemap pages 200, 404 page, robots.txt, canonical and share image, no JS errors on mobile or desktop — Claude (2026-10-28)
 - [x] Cloudflare Pages project `house-of-dhri` created and V1 deployed to `house-of-dhri.pages.dev`; all 17 pages, sitemap and robots.txt load (root `V1`, `npm run build`, `dist`, `NODE_VERSION=24.14.1`) — Claude (2026-10-28)
