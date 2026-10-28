@@ -5,3 +5,7 @@
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+
+# Keep the pages.dev preview out of search results (the real domain is unaffected)
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
