@@ -29,7 +29,7 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **Google Business Profile — create and verify** at business.google.com (Google sends a code by video, phone or post)
   Owner: Ankur (Vidhi can be added as manager) · After: content ready
 - [ ] **Google Search (Search Console)** — add `houseofdhri.com`, verify through Cloudflare DNS, submit `sitemap.xml`, request indexing of the home and collection pages
-  Owner: Ankur (Google account) + Claude (DNS record, sitemap, indexing requests) · Ready now: site is live
+  Owner: Vidhi (Google account) + Claude (DNS record, sitemap, indexing requests) · Ready now: site is live
 - [ ] **Bing Webmaster Tools** — import from Search Console, submit sitemap
   Owner: Ankur + Claude · After: Search Console
 - [ ] **Google Analytics (GA4) — create the property** for `houseofdhri.com` and share the Measurement ID (`G-…`)
@@ -78,10 +78,10 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 - [ ] **@houseofdhri.com email** — confirm whether it's used; its GoDaddy records were kept as-is
   Owner: Ankur
 
-## 6. Website V2
+## 6. Website V2 (parked)
 
-- [ ] **Review V2** and decide whether it replaces V1 on houseofdhri.com (V1 is live now; switching is one setting in Cloudflare Pages). Preview: https://house-of-dhri-v2.pages.dev
-  Owner: Ankur + Vidhi
+> **Decision (2026-10-28):** go with V1 for now. V2 is parked: its preview `house-of-dhri-v2.pages.dev` redirects to houseofdhri.com (Cloudflare → Bulk Redirects → list `pages_dev_to_houseofdhri`), so Google can't crawl it. To bring the preview back, remove the V2 line from that list. The V2 code stays in `V2/`. The items below are for when V2 is picked up again.
+
 - [ ] **Husband's name and photo for Our Story** — the page currently says "her husband"
   Owner: Ankur
 - [ ] **Confirm the facts the copy states** — all gold BIS hallmarked; engraving offered; the five workshop checks on the Diamonds page; "Designed and made in India"; same WhatsApp number as V1
@@ -102,6 +102,8 @@ Owners: **Ankur** · **Vidhi** · **Claude** (AI assistant, works from Ankur's m
 
 ## Done
 
+- [x] V1 chosen for now, V2 parked — Vidhi (2026-10-28)
+- [x] `pages.dev` addresses redirected to houseofdhri.com: V2 preview (all pages and deployments) → home page, V1's `house-of-dhri.pages.dev` → same page on houseofdhri.com, so only the real domain gets indexed — Claude + Ankur (2026-10-28)
 - [x] V2 preview site at `house-of-dhri-v2.pages.dev` (Pages project `house-of-dhri-v2`, root `V2`, rebuilds on every push; kept out of search results) — Claude (2026-10-28)
 - [x] `houseofdhri.com` and `www.houseofdhri.com` connected to the Pages project; Wix records replaced, email records kept; `www` → `houseofdhri.com` 301 redirect rule (keeps path and query) — Claude, approved by Ankur (2026-10-28)
 - [x] Live site checked — HTTPS, `http` and `www` redirects, all 17 sitemap pages 200, 404 page, robots.txt, canonical and share image, no JS errors on mobile or desktop — Claude (2026-10-28)
